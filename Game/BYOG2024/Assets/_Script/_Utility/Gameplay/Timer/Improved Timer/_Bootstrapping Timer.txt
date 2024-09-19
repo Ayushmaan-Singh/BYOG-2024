@@ -1,0 +1,4 @@
+﻿This system was made by studying from git-amends video
+
+Video Link: https://www.youtube.com/watch?v=ilvmOQtl57c&t=1s
+Project Link: https://github.com/adammyhre/Unity-Improved-Timers/tree/master

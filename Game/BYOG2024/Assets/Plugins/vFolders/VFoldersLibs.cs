@@ -69,8 +69,6 @@ namespace VFolders.Libs
         public static string PrettifyVarName(this string str, bool lowercaseFollowingWords = true) => string.Join(" ", str.Decamelcase().Split(' ').Select(r => new[] { "", "and", "or", "with", "without", "by", "from" }.Contains(r.ToLower()) || (lowercaseFollowingWords && !str.Trim().StartsWith(r)) ? r.ToLower() : r.Substring(0, 1).ToUpper() + r.Substring(1))).Trim(' ');
         public static string RemoveParenthesized(this string s) => Regex.Replace(s, @"/\().*?\) /g", "").Trim();
 
-
-
         #endregion
 
         #region Reflection

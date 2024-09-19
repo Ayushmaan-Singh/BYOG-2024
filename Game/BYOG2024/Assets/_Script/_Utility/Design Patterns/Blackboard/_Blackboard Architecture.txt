@@ -1,0 +1,6 @@
+﻿This design pattern was made by studying from video of git-amend
+
+Video link: https://www.youtube.com/watch?v=HNGJ8KOqdYQ
+
+GitHub project link: https://github.com/adammyhre/Unity-Behaviour-Trees/tree/master
+Precondition script: https://gist.github.com/adammyhre/82d495ab99e2c59a19362119b2d43194

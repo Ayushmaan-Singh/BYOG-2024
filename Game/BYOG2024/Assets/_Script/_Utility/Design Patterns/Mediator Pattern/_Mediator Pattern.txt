@@ -1,0 +1,3 @@
+﻿This design pattern was made by studying from git-amend videos
+
+Video link: https://www.youtube.com/watch?v=rRsfikzuobQ&list=PLnJJ5frTPwRNdPS7F6AYZwyf4b5IXFhtc&index=4
