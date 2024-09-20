@@ -20,7 +20,7 @@ namespace Entity.Player
 		}
 		protected new void OnDestroy()
 		{
-			ServiceLocator.For(this)?.Register(this);
+			ServiceLocator.For(this)?.Deregister(this);
 		}
 
 		public void Attack() => _activeAbility.Execute();
