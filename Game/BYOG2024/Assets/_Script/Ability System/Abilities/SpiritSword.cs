@@ -1,26 +1,71 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using AstekUtility;
+using AstekUtility.DesignPattern.ServiceLocatorTool;
+using AstekUtility.Input;
+using AstekUtility.Odin.Utility;
 using UnityEngine;
 using UnityEngine.Splines;
+using UnityEngine.VFX;
 namespace Entity.Abilities
 {
 	public class SpiritSword : AbilityBase
 	{
-		[SerializeField] private GameObject sword;
-		[SerializeField] private SplineContainer attackSpline;
+		[SerializeField] private float damage;
 
+		[Header("Visuals")]
+		[SerializeField] private GameObject sword;
+		[SerializeField] private SplineContainer[] attackSpline;
+		[SerializeField] private SplineAnimate animate;
+		[SerializeField] private TrailRenderer trail;
+
+		private string _oppositionTag="Enemy";
+
+		private int _index = 0;
+		//TODO:Add effects like trailrenderer and slashes
+
+		private void Awake()
+		{
+			trail.Clear();
+			sword.SetActive(false);
+			OnCollisionEnterEvent collision = GetComponentInChildren<OnCollisionEnterEvent>();
+			collision += Damage;
+		}
+
+		private void Update()
+		{
+			if (animate.ElapsedTime / animate.Duration >= 1f)
+			{
+				sword.SetActive(false);
+				animate.Restart(false);
+				trail.Clear();
+				_currentState = State.Usable;
+			}
+		}
 
 		public override void Execute()
 		{
-			
-		}
-		public override void CancelExecution()
-		{
-			throw new System.NotImplementedException();
+			if (_currentState != State.Usable)
+				return;
+
+			_currentState = State.InProgress;
+			sword.SetActive(true);
+			animate.Container = attackSpline[_index];
+			_index = _index == 0 ? 1 : 0;
+			animate.Play();
+
 		}
 
-		// private IEnumerator SwordSlash()
-		// {
-		// 	for(int i=0;i<)
-		// }
+		public override void CancelExecution() { }
+
+		private void Damage(Collision collision)
+		{
+			if (collision.collider.CompareTag(_oppositionTag))
+			{
+				collision.collider.GetComponentInChildren<EntityHealthManager>().Damage(
+					ServiceLocator.For(this).Get<EntityStatSystem>().GetInstanceStats(Stats.DamageScale) * damage / 100);
+			}
+		}
+		//TODO: During on switch provide this character with tags
 	}
 }

@@ -13,6 +13,8 @@ namespace Entity.Abilities
 			InProgress
 		}
 
+		protected State _currentState = State.Usable;
+		
 		public abstract void Execute();
 		public abstract void CancelExecution();
 	}
