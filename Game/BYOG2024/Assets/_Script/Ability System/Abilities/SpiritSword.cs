@@ -62,7 +62,11 @@ namespace Entity.Abilities
 		{
 			if (collision.collider.CompareTag(_oppositionTag))
 			{
-				collision.collider.GetComponentInChildren<EntityHealthManager>().Damage(
+				EntityHealthManager healthManager = collision.collider.GetComponentInChildren<EntityHealthManager>();
+				if(healthManager==null)
+					healthManager = collision.collider.GetComponentInParent<EntityHealthManager>();
+                
+				healthManager.Damage(
 					ServiceLocator.For(this).Get<EntityStatSystem>().GetInstanceStats(Stats.DamageScale) * damage / 100);
 			}
 		}

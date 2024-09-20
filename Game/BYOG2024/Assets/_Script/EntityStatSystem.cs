@@ -64,6 +64,11 @@ namespace Entity
 
 					_instanceValue[stat] -= amount;
 					break;
+				
+				case Operation.Equate:
+
+					_instanceValue[stat] = amount;
+					break;
 
 				default:
 					throw new ArgumentOutOfRangeException(nameof(operation), operation, null);
@@ -82,6 +87,7 @@ namespace Entity
 	public enum Operation
 	{
 		Increment,
-		Decrement
+		Decrement,
+		Equate
 	}
 }

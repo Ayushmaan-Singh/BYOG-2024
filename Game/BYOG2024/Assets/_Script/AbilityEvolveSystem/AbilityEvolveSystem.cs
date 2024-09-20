@@ -17,7 +17,7 @@ namespace Combat
 
 		private void OnDestroy()
 		{
-			ServiceLocator.ForSceneOf(this).Deregister(this);
+			ServiceLocator.ForSceneOf(this)?.Deregister(this);
 		}
 
 		public void AbsorbKill(EnemyTypes type)

@@ -8,6 +8,7 @@ namespace AstekUtility.VisualFeedback
 	{
 		[Tooltip("Meshes with materials to apply the effect on")]
 		[SerializeField] private List<MeshRenderer> _applyEffectOnRenders;
+		[SerializeField] private List<SkinnedMeshRenderer> _applyEffectOnRendersSkinned;
 
 		[Title("Sequence settings")]
 		[SerializeField] private float _duration;
@@ -24,6 +25,8 @@ namespace AstekUtility.VisualFeedback
 		private List<Color> _materialbaseColor = new List<Color>();
 		private List<Material> _materialsAffected = new List<Material>();
 		private float _timeCounter;
+
+		public EffectState CurrentState => _currentState;
 
 		private void Update()
 		{
@@ -85,13 +88,29 @@ namespace AstekUtility.VisualFeedback
 			_materialsAffected = _materialsAffected ?? new List<Material>();
 			_emissionTexture = _emissionTexture ?? new List<Texture>();
 
-			foreach (MeshRenderer mesh in _applyEffectOnRenders)
+			if (_applyEffectOnRenders.Count > 0)
 			{
-				foreach (Material material in mesh.materials)
+				foreach (MeshRenderer mesh in _applyEffectOnRenders)
 				{
-					_emissionTexture.Add(material.GetTexture("_EmissionMap"));
-					_materialbaseColor.Add(material.GetColor("_EmissionColor"));
-					_materialsAffected.Add(material);
+					foreach (Material material in mesh.materials)
+					{
+						_emissionTexture.Add(material.GetTexture("_EmissionMap"));
+						_materialbaseColor.Add(material.GetColor("_EmissionColor"));
+						_materialsAffected.Add(material);
+					}
+				}
+			}
+
+			if (_applyEffectOnRendersSkinned.Count>0)
+			{
+				foreach (SkinnedMeshRenderer mesh in _applyEffectOnRendersSkinned)
+				{
+					foreach (Material material in mesh.materials)
+					{
+						_emissionTexture.Add(material.GetTexture("_EmissionMap"));
+						_materialbaseColor.Add(material.GetColor("_EmissionColor"));
+						_materialsAffected.Add(material);
+					}
 				}
 			}
 		}
@@ -142,7 +161,7 @@ namespace AstekUtility.VisualFeedback
 				_materialsAffected[i].SetColor("_EmissionColor", _materialbaseColor[i]);
 			}
 		}
-		private enum EffectState
+		public enum EffectState
 		{
 			Running,
 			Paused,
