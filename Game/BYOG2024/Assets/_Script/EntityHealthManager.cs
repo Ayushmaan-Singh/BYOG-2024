@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _Script;
 using AstekUtility.DesignPattern.ServiceLocatorTool;
 using AstekUtility.VisualFeedback;
+using Combat;
+using Entity.Abilities;
 using UnityEngine;
 
 namespace Entity
@@ -43,6 +46,15 @@ namespace Entity
 		{
 			if (IsAlive)
 				_currentHP = Mathf.Clamp(_currentHP + amount, 0, ServiceLocator.For(this).Get<EntityStatSystem>().GetInstanceStats(Stats.Hp));
+		}
+
+		public void OnParticleCollision(GameObject other)
+		{
+			if (!IsAlive && other.GetComponentInParent<Gluttony>() != null && CompareTag("Enemy"))
+			{
+				ServiceLocator.ForSceneOf(this).Get<AbilityEvolveSystem>().AbsorbKill
+					(ServiceLocator.For(this).Get<EnemyController>().Type);
+			}
 		}
 	}
 }
