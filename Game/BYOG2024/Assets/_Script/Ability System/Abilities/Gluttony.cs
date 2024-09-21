@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using AstekUtility;
 using AstekUtility.DesignPattern.ServiceLocatorTool;
+using AstekUtility.Gameplay.Timer;
 using Entity.Player;
 using UnityEngine;
 using UnityEngine.Diagnostics;
@@ -11,44 +12,124 @@ namespace Entity.Abilities
 {
 	public class Gluttony : AbilityBase
 	{
+		[SerializeField] private Rigidbody rb;
+		
+		[Header("Visuals")]
 		[SerializeField] private GameObject gluttonyGO;
 		[SerializeField] private ParticleSystem[] gluttonyVfx;
 		[SerializeField] private Collider gluttonyCollider;
-		[SerializeField] private float disableColliderAfter;
-		[SerializeField] private float enableColliderAfter;
+
+		[Header("Timers")]
+		[SerializeField] private float gluttonyMaxRunTime;
+		[SerializeField] private float cooldown;
+		[SerializeField] private float stopDelay; 
+
+		private CountdownTimer _gluttonyRunTimer;
+		private CountdownTimer _cooldownTimer;
+
+		private CoroutineTask _wakeupRbTask;
 
 		private void Awake()
 		{
-			OnCollisionEnterEvent collisionEvent = GetComponentInChildren<OnCollisionEnterEvent>() + AbsorbDead;
-			OnCollisionStayEvent collisionStayEvent = GetComponentInChildren<OnCollisionStayEvent>() + AbsorbDead;
-			gluttonyCollider.enabled = false;
+			GetComponentInChildren<OnCollisionEnterEvent>().Register(AbsorbDead);
+			GetComponentInChildren<OnCollisionStayEvent>().Register(AbsorbDead);
+
+			_wakeupRbTask = new CoroutineTask(WakeupRigidbody(),this,false);
+			
+			_cooldownTimer = new CountdownTimer(cooldown);
+			_gluttonyRunTimer = new CountdownTimer(gluttonyMaxRunTime);
+
+			_cooldownTimer.OnTimerStop += OnCooldownFinished;
+			_gluttonyRunTimer.OnTimerStop += StopGluttony;
+		}
+
+		private void Update()
+		{
+			switch (_currentState)
+			{
+
+				case State.Usable:
+
+					_gluttonyRunTimer.Reset();
+					_cooldownTimer.Reset();
+
+					break;
+
+				case State.Unusable:
+
+					_cooldownTimer.Tick(Time.deltaTime);
+
+					break;
+
+				case State.InProgress:
+
+					_gluttonyRunTimer.Tick(Time.deltaTime);
+					
+					break;
+
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
+
+		private void FixedUpdate()
+		{
+			if (_currentState == State.InProgress)
+			{
+				if (rb.IsSleeping() && !_wakeupRbTask.Running)
+				{
+					_wakeupRbTask.Start();
+				}
+				Debug.Log(rb.IsSleeping());
+			}
 		}
 
 		public override void Execute()
 		{
-			gluttonyGO.SetActive(true);
-			Invoke(nameof(TriggerCollider),enableColliderAfter);
-			transform.position = ServiceLocator.For(this).Get<PlayerController>().transform.position.With(y:gluttonyGO.transform.position.y);
+			if (_currentState != State.Usable)
+				return;
+			
+			transform.position = ServiceLocator.For(this).Get<PlayerController>().transform.position.With(y:0);
 			ServiceLocator.For(this).Get<EntityStatSystem>().ModifyInstanceStatValue(Stats.MovementSpeed, 0, Operation.Equate);
 			foreach (ParticleSystem particle in gluttonyVfx)
 			{
 				particle.Play();
 			}
+			_currentState = State.InProgress;
+			_gluttonyRunTimer.Start();
 		}
+
 		public override void CancelExecution()
+		{
+			//noap
+		}
+
+		private void StopGluttony()
 		{
 			foreach (ParticleSystem particle in gluttonyVfx)
 			{
 				particle.Stop();
 			}
-			Invoke(nameof(TriggerCollider),disableColliderAfter);
+			
+			Invoke(nameof(StopGluttonyDelayed),stopDelay);
+		}
+		
+		private void StopGluttonyDelayed()
+		{
 			ServiceLocator.For(this).Get<EntityStatSystem>().ModifyInstanceStatValue(Stats.MovementSpeed,
 				ServiceLocator.For(this).Get<EntityStatSystem>().GetDefaultStats(Stats.MovementSpeed), Operation.Equate);
+			_currentState = State.Unusable;
+			_cooldownTimer.Start();
 		}
 
-		public void AbsorbDead(Collision collision)
+		private void OnCooldownFinished()
 		{
-			if (!collision.collider.CompareTag("Enemy"))
+			_currentState = State.Usable;
+		}
+
+		private void AbsorbDead(Collision collision)
+		{
+			if (_currentState == State.InProgress && !collision.collider.CompareTag("Enemy"))
 				return;
 
 			EntityHealthManager healthManager = collision.collider.GetComponentInChildren<EntityHealthManager>();
@@ -58,9 +139,12 @@ namespace Entity.Abilities
 			healthManager.GettingEatenByGluttony();
 		}
 
-		public void TriggerCollider()
+		private IEnumerable WakeupRigidbody()
 		{
-			gluttonyCollider.enabled = !gluttonyCollider.enabled;
+			rb.isKinematic = false;
+			rb.WakeUp();
+			yield return new WaitForFixedUpdate();
+			rb.isKinematic = true;
 		}
 	}
 }

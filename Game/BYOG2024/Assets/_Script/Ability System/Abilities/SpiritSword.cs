@@ -28,8 +28,7 @@ namespace Entity.Abilities
 		{
 			trail.Clear();
 			sword.SetActive(false);
-			OnCollisionEnterEvent collision = GetComponentInChildren<OnCollisionEnterEvent>();
-			collision += Damage;
+			GetComponentInChildren<OnCollisionEnterEvent>().Register(Damage);
 		}
 
 		private void Update()

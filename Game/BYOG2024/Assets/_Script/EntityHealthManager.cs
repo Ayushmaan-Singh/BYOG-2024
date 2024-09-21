@@ -18,7 +18,7 @@ namespace Entity
 		[SerializeField] private float bodyDecayAfter;
 
 		private CoroutineTask _gettingAbsorbedTask;
-		
+
 		private float _currentHP;
 		public bool IsAlive => _currentHP > 0;
 		public float CurrentHP => _currentHP;
@@ -26,7 +26,7 @@ namespace Entity
 		private void Awake()
 		{
 			ServiceLocator.For(this).Register(this);
-			_gettingAbsorbedTask = new CoroutineTask(GettingAbsorbedVisual(),this,false);
+			_gettingAbsorbedTask = new CoroutineTask(GettingAbsorbedVisual(), this, false);
 		}
 
 		private void OnDestroy()
@@ -64,7 +64,7 @@ namespace Entity
 		{
 			if (IsAlive || _gettingAbsorbedTask.Running)
 				return;
-			
+
 			StopCoroutine(nameof(DestroyAfter));
 			ServiceLocator.ForSceneOf(this).Get<AbilityEvolveSystem>().AbsorbKill
 				(ServiceLocator.For(this).Get<EnemyController>().Type);
@@ -74,7 +74,9 @@ namespace Entity
 		private IEnumerable GettingAbsorbedVisual()
 		{
 			gluttonyConsumption.Play();
-			yield return new WaitWhile(() => gluttonyConsumption.CurrentState == DamageBlinking.EffectState.Running || gluttonyConsumption.CurrentState == DamageBlinking.EffectState.CanBeExecuted);
+			yield return new WaitWhile(() =>
+				gluttonyConsumption.CurrentState == DamageBlinking.EffectState.Running
+				|| gluttonyConsumption.CurrentState == DamageBlinking.EffectState.CanBeExecuted);
 			Destroy(ServiceLocator.For(this).gameObject);
 		}
 

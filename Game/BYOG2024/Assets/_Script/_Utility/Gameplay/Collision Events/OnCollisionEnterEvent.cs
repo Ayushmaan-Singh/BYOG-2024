@@ -15,15 +15,13 @@ namespace AstekUtility
 			_onCollisionEnter?.Invoke(other);
 		}
 
-		public static OnCollisionEnterEvent operator +(OnCollisionEnterEvent collision, UnityAction<Collision> action)
+		public void Register(UnityAction<Collision> action)
 		{
-			collision._onCollisionEnter.AddListener(action);
-			return collision;
+			_onCollisionEnter.AddListener(action);
 		}
-		public static OnCollisionEnterEvent operator -(OnCollisionEnterEvent collision, UnityAction<Collision> action)
+		public void Deregister(UnityAction<Collision> action)
 		{
-			collision._onCollisionEnter.AddListener(action);
-			return collision;
+			_onCollisionEnter.AddListener(action);
 		}
 	}
 }

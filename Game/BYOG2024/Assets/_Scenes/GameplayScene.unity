@@ -3327,6 +3327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e677c68755542041a9298d0b670536b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 859544053}
   gluttonyGO: {fileID: 1161237281}
   gluttonyVfx:
   - {fileID: 1587115264}
@@ -3336,8 +3337,9 @@ MonoBehaviour:
   - {fileID: 1207492310}
   - {fileID: 635572824}
   gluttonyCollider: {fileID: 2121871550}
-  disableColliderAfter: 2
-  enableColliderAfter: 2
+  gluttonyMaxRunTime: 10
+  cooldown: 20
+  stopDelay: 2.3
 --- !u!1818360608 &859544052
 PositionConstraint:
   m_ObjectHideFlags: 0
@@ -3383,7 +3385,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 2
 --- !u!114 &859544054
 MonoBehaviour:
@@ -3412,7 +3414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cae14f78c783a441b5422ddc51e3c54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onCollisionEnter:
+  _onCollisionStay:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &933578576
@@ -5741,6 +5743,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 0
+  rb: {fileID: 1454388383}
 --- !u!114 &1454388381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5780,7 +5783,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!1 &1457264223
@@ -8523,7 +8526,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 55
@@ -8532,7 +8535,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 14.9
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2124542596
 GameObject:

@@ -7,22 +7,20 @@ namespace AstekUtility
 {
 	internal class OnCollisionStayEvent : MonoBehaviour
 	{
-		[SerializeField] private UnityEvent<Collision> _onCollisionEnter;
+		[SerializeField] private UnityEvent<Collision> _onCollisionStay;
 
 		private void OnCollisionStay(Collision other)
 		{
-			_onCollisionEnter?.Invoke(other);
+			_onCollisionStay?.Invoke(other);
 		}
 
-		public static OnCollisionStayEvent operator +(OnCollisionStayEvent collision, UnityAction<Collision> action)
+		public void Register(UnityAction<Collision> action)
 		{
-			collision._onCollisionEnter.AddListener(action);
-			return collision;
+			_onCollisionStay.AddListener(action);
 		}
-		public static OnCollisionStayEvent operator -(OnCollisionStayEvent collision, UnityAction<Collision> action)
+		public void Deregister(UnityAction<Collision> action)
 		{
-			collision._onCollisionEnter.AddListener(action);
-			return collision;
+			_onCollisionStay.AddListener(action);
 		}
 	}
 }
