@@ -68,7 +68,7 @@ namespace Entity.Player
 
 		//Ability
 		private void CurrentAbilityChanged(InputAction.CallbackContext ctx) =>
-			_serviceLocator.Get<PlayerAbilitySystem>().SwitchActiveAbility(Math.Clamp(ctx.ReadValue<int>(), -1, 1));
+			_serviceLocator.Get<PlayerAbilitySystem>().SwitchActiveAbility(Math.Clamp(ctx.ReadValue<float>(), -1f, 1f));
 
 
 		private void GluttonyPerformed(InputAction.CallbackContext ctx) =>

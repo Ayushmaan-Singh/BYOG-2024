@@ -60,6 +60,18 @@ namespace Entity
 				_currentHP = Mathf.Clamp(_currentHP + amount, 0, ServiceLocator.For(this).Get<EntityStatSystem>().GetInstanceStats(Stats.Hp));
 		}
 
+		private void OnParticleCollision(GameObject particle)
+		{
+			if (!CompareTag("Enemy"))
+				return;
+			
+			ParticleEffectMediator effectMediator = particle.GetComponentInParent<ParticleEffectMediator>();
+			if (effectMediator)
+			{
+				Damage(effectMediator.Damage);
+			}
+		}
+
 		public void GettingEatenByGluttony()
 		{
 			if (IsAlive || _gettingAbsorbedTask.Running)

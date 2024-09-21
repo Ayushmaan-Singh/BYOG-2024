@@ -26,7 +26,7 @@ namespace Entity.Player
 		public void Attack() => _activeAbility.Execute();
 		public void CancelAttack() => _activeAbility.CancelExecution();
 		
-		public void SwitchActiveAbility(int dir)
+		public void SwitchActiveAbility(float dir)
 		{
 			if (_activeAbilityIndex + Mathf.Clamp(dir, -1, 1) >= abilitySystem.Count)
 				_activeAbilityIndex = 0;

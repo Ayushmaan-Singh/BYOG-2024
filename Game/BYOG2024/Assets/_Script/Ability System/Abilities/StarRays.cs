@@ -1,18 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using AstekUtility;
 using AstekUtility.DesignPattern.ServiceLocatorTool;
 using AstekUtility.Gameplay.Timer;
 using AstekUtility.Input;
 using Combat;
 using Entity.Player;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Entity.Abilities
 {
-	public class OrbitalBombardment : AbilityBase
+	public class StarRays : AbilityBase
 	{
 		[Header("Ability Data")]
 		[SerializeField] private float damagePerHit;
@@ -81,7 +79,7 @@ namespace Entity.Abilities
 					}
 					
 					break;
-				
+
 				case State.InProgress:
 
 					if (_indicatorOn)
@@ -108,8 +106,8 @@ namespace Entity.Abilities
 			_currentState = State.Unusable;
 			Vector3 mousePos = ServiceLocator.Global.Get<InputUtils.MousePosition>().Invoke();
 			Transform holder = ServiceLocator.ForSceneOf(this).Get<ParticleEffectsHolder>().transform;
-			GameObject spawn=Instantiate(attackPrefab, mousePos, Quaternion.identity, holder);
-			spawn.GetComponentInChildren<ParticleEffectMediator>().SetAbility(this,damagePerHit);
+			GameObject spawn = Instantiate(attackPrefab, mousePos, Quaternion.identity, holder);
+			spawn.GetComponentInChildren<ParticleEffectMediator>().SetAbility(this, damagePerHit);
 			spawn.GetComponentInChildren<ParticleEffectMediator>().ParticleEffectOn();
 			_cooldownTimer.Start();
 		}
