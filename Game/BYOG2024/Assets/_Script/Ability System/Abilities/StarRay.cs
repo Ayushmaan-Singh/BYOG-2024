@@ -4,12 +4,20 @@ using UnityEngine;
 
 namespace Entity.Abilities
 {
-	public class StarRay : MonoBehaviour
+	public class StarRay : AbilityBase
 	{
 		// Start is called before the first frame update
 		void Start() { }
 
 		// Update is called once per frame
 		void Update() { }
+		public override void Execute()
+		{
+			throw new System.NotImplementedException();
+		}
+		public override void CancelExecution()
+		{
+			throw new System.NotImplementedException();
+		}
 	}
 }
