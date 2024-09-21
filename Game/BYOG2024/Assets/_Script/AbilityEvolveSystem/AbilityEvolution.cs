@@ -11,7 +11,14 @@ namespace Entity.Abilities
 
 		public AbilityBase NextEvolution(AbilityBase ability)
 		{
-			return abilityEvolutionTable.GetValueOrDefault(ability);
+			foreach (AbilityBase abilityStored in abilityEvolutionTable.Keys)
+			{
+				if (ability.GetType() == abilityStored.GetType())
+				{
+					return abilityEvolutionTable.GetValueOrDefault(abilityStored);
+				}
+			}
+			return null;
 		}
 	}
 }

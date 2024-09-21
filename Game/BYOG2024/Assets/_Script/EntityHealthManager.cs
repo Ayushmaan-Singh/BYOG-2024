@@ -78,8 +78,6 @@ namespace Entity
 				return;
 
 			StopCoroutine(nameof(DestroyAfter));
-			ServiceLocator.ForSceneOf(this).Get<AbilityEvolveSystem>().AbsorbKill
-				(ServiceLocator.For(this).Get<EnemyController>().Type);
 			_gettingAbsorbedTask.Start();
 		}
 
@@ -89,6 +87,8 @@ namespace Entity
 			yield return new WaitWhile(() =>
 				gluttonyConsumption.CurrentState == DamageBlinking.EffectState.Running
 				|| gluttonyConsumption.CurrentState == DamageBlinking.EffectState.CanBeExecuted);
+			ServiceLocator.ForSceneOf(this).Get<AbilityEvolveSystem>().AbsorbKill
+				(ServiceLocator.For(this).Get<EnemyController>().Type);
 			Destroy(ServiceLocator.For(this).gameObject);
 		}
 
