@@ -6,6 +6,10 @@ namespace Entity.Abilities
 {
 	public abstract class AbilityBase : MonoBehaviour
 	{
+		[Header("UI Data",order = 100)]
+		[field:SerializeField] public Sprite AbilityIcon;
+		[field:SerializeField, TextArea] public string AbilityDescription;
+		
 		public enum State
 		{
 			Usable,
