@@ -18,7 +18,7 @@ namespace Entity.Abilities
 		[SerializeField] private SplineContainer[] attackSpline;
 		[SerializeField] private SplineAnimate animate;
 		[SerializeField] private TrailRenderer trail;
-
+		 
 		private string _oppositionTag="Enemy";
 
 		private int _index = 0;

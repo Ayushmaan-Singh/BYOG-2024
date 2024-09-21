@@ -8,7 +8,7 @@ namespace Abiogenesis3d
         KeyCode dragKey = KeyCode.Mouse0;
         Vector2 lastMousePosition;
         RectTransform rectTransform;
-
+       
         void Start()
         {
             rectTransform = GetComponent<RectTransform>();

@@ -8,7 +8,7 @@ namespace Global
 	public class CameraRuntimeSet : ScriptableObject
 	{
 		private Dictionary<CameraInGame, GameObject> _rtSet = new Dictionary<CameraInGame, GameObject>();
-
+		
 		public GameObject this[CameraInGame key]
 		{
 			get
