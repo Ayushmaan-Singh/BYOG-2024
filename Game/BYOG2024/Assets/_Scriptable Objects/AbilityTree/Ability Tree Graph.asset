@@ -1,0 +1,364 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5507b844724870b8c2469b2fe305b0, type: 3}
+  m_Name: Ability Tree Graph
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 7963377259679701811}
+  - {fileID: 4244096764223144460}
+  - {fileID: 5062804588112599672}
+  - {fileID: 8325754520921380289}
+  - {fileID: 9052649005703941891}
+  - {fileID: 8648029284308357235}
+  startNodes:
+  - {fileID: 7963377259679701811}
+  - {fileID: 8325754520921380289}
+  gainableAbilities:
+  - {fileID: 7963377259679701811}
+  - {fileID: 5062804588112599672}
+  - {fileID: 8325754520921380289}
+--- !u!114 &4244096764223144460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c7575c76e347f28d4005230ae7c2f5, type: 3}
+  m_Name: Hammer Drop
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -344, y: -200}
+  ports:
+    keys:
+    - PrevNode
+    - NextNode
+    values:
+    - _fieldName: PrevNode
+      _node: {fileID: 4244096764223144460}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: NextNode
+        node: {fileID: 7963377259679701811}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: NextNode
+      _node: {fileID: 4244096764223144460}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  PrevNode: 0
+  NextNode: 0
+  abilityBaseGameObject: {fileID: 2201756499236260706, guid: 584c4482b82f00a4c8f72d3225dfb2b7,
+    type: 3}
+  gainRequirements: []
+  evolveRequirements:
+  - <Consumable>k__BackingField: 0
+    <Count>k__BackingField: 5
+  - <Consumable>k__BackingField: 3
+    <Count>k__BackingField: 1
+  - <Consumable>k__BackingField: 3
+    <Count>k__BackingField: 1
+--- !u!114 &5062804588112599672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c7575c76e347f28d4005230ae7c2f5, type: 3}
+  m_Name: UnlimitedBladeWorks
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -344, y: 88}
+  ports:
+    keys:
+    - PrevNode
+    - NextNode
+    values:
+    - _fieldName: PrevNode
+      _node: {fileID: 5062804588112599672}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: NextNode
+        node: {fileID: 7963377259679701811}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: NextNode
+      _node: {fileID: 5062804588112599672}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: PrevNode
+        node: {fileID: 8648029284308357235}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  PrevNode: 0
+  NextNode: 0
+  abilityBaseGameObject: {fileID: 671003631086982751, guid: a46313dfd89bd89479a49d6235cf0cf6,
+    type: 3}
+  gainRequirements:
+  - <Consumable>k__BackingField: 0
+    <Count>k__BackingField: 10
+  - <Consumable>k__BackingField: 1
+    <Count>k__BackingField: 1
+  - <Consumable>k__BackingField: 2
+    <Count>k__BackingField: 2
+  - <Consumable>k__BackingField: 4
+    <Count>k__BackingField: 1
+  evolveRequirements:
+  - <Consumable>k__BackingField: 0
+    <Count>k__BackingField: 4
+  - <Consumable>k__BackingField: 1
+    <Count>k__BackingField: 1
+  - <Consumable>k__BackingField: 3
+    <Count>k__BackingField: 3
+--- !u!114 &7963377259679701811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c7575c76e347f28d4005230ae7c2f5, type: 3}
+  m_Name: Fire Shot
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -680, y: -72}
+  ports:
+    keys:
+    - PrevNode
+    - NextNode
+    values:
+    - _fieldName: PrevNode
+      _node: {fileID: 7963377259679701811}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: NextNode
+      _node: {fileID: 7963377259679701811}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: PrevNode
+        node: {fileID: 5062804588112599672}
+        reroutePoints: []
+      - fieldName: PrevNode
+        node: {fileID: 4244096764223144460}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  PrevNode: 0
+  NextNode: 0
+  abilityBaseGameObject: {fileID: 7873608035918064152, guid: 1be8a15922e6d7b449968e0f7c49bdf6,
+    type: 3}
+  gainRequirements:
+  - <Consumable>k__BackingField: 0
+    <Count>k__BackingField: 5
+  - <Consumable>k__BackingField: 1
+    <Count>k__BackingField: 1
+  evolveRequirements: []
+--- !u!114 &8325754520921380289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c7575c76e347f28d4005230ae7c2f5, type: 3}
+  m_Name: Missile Barrage
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -664, y: 568}
+  ports:
+    keys:
+    - PrevNode
+    - NextNode
+    values:
+    - _fieldName: PrevNode
+      _node: {fileID: 8325754520921380289}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: NextNode
+      _node: {fileID: 8325754520921380289}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: PrevNode
+        node: {fileID: 9052649005703941891}
+        reroutePoints: []
+      - fieldName: PrevNode
+        node: {fileID: 8648029284308357235}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  PrevNode: 0
+  NextNode: 0
+  abilityBaseGameObject: {fileID: 1104041498942587114, guid: bc0df4aac6eca9948a7b032ade06345f,
+    type: 3}
+  gainRequirements:
+  - <Consumable>k__BackingField: 0
+    <Count>k__BackingField: 5
+  - <Consumable>k__BackingField: 1
+    <Count>k__BackingField: 1
+  evolveRequirements: []
+--- !u!114 &8648029284308357235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c7575c76e347f28d4005230ae7c2f5, type: 3}
+  m_Name: Ability Tree
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 136, y: 440}
+  ports:
+    keys:
+    - PrevNode
+    - NextNode
+    values:
+    - _fieldName: PrevNode
+      _node: {fileID: 8648029284308357235}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: NextNode
+        node: {fileID: 8325754520921380289}
+        reroutePoints: []
+      - fieldName: NextNode
+        node: {fileID: 5062804588112599672}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: NextNode
+      _node: {fileID: 8648029284308357235}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  PrevNode: 0
+  NextNode: 0
+  abilityBaseGameObject: {fileID: 7752564792330250725, guid: 69a6fc674b7023444beaaac4e730c65a,
+    type: 3}
+  gainRequirements: []
+  evolveRequirements:
+  - <Consumable>k__BackingField: 0
+    <Count>k__BackingField: 3
+  - <Consumable>k__BackingField: 2
+    <Count>k__BackingField: 1
+  - <Consumable>k__BackingField: 3
+    <Count>k__BackingField: 1
+  - <Consumable>k__BackingField: 1
+    <Count>k__BackingField: 3
+--- !u!114 &9052649005703941891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c7575c76e347f28d4005230ae7c2f5, type: 3}
+  m_Name: Dark Arrow Volley
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -200, y: 648}
+  ports:
+    keys:
+    - PrevNode
+    - NextNode
+    values:
+    - _fieldName: PrevNode
+      _node: {fileID: 9052649005703941891}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: NextNode
+        node: {fileID: 8325754520921380289}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: NextNode
+      _node: {fileID: 9052649005703941891}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  PrevNode: 0
+  NextNode: 0
+  abilityBaseGameObject: {fileID: 5601872718568124204, guid: b824398ff33b3564d82cc7591dca59ed,
+    type: 3}
+  gainRequirements:
+  - <Consumable>k__BackingField: 0
+    <Count>k__BackingField: 3
+  - <Consumable>k__BackingField: 1
+    <Count>k__BackingField: 1
+  - <Consumable>k__BackingField: 3
+    <Count>k__BackingField: 2
+  evolveRequirements:
+  - <Consumable>k__BackingField: 0
+    <Count>k__BackingField: 3
+  - <Consumable>k__BackingField: 1
+    <Count>k__BackingField: 1
+  - <Consumable>k__BackingField: 3
+    <Count>k__BackingField: 10

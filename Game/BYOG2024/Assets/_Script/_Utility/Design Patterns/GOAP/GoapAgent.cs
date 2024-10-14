@@ -18,11 +18,11 @@ namespace AstekUtility.DesignPattern.GOAP
 		protected IGoapPlanner _planner;
 
 		/// <summary>
-		/// This always runs in Update
+		/// This always runs in FrameUpdate
 		/// </summary>
 		protected void RunGoap()
 		{
-			//Update the plan and current action if there is one
+			//FrameUpdate the plan and current action if there is one
 			if (CurrentAction == null)
 			{
 				CalculatePlan();

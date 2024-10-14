@@ -1,4 +1,11 @@
 namespace AstekUtility.Gameplay
 {
-	public interface IDamageable { }
+	public interface IDamageable
+	{
+		float MaxHp { get; }
+		float CurrentHp { get; }
+
+		void Damage(float amount);
+		void Heal(float amount);
+	}
 }

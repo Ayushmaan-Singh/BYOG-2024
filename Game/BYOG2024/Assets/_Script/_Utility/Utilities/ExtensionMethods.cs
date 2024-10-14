@@ -47,6 +47,41 @@ namespace AstekUtility
 			new Vector3(current.x.SetPrecision(precision), current.y.SetPrecision(precision), current.z.SetPrecision(precision));
 	}
 
+	public static class Vector2Extensions
+	{
+		/// <summary>
+		/// Sets any x y _values of a Vector2
+		/// </summary>
+		public static Vector2 With(this Vector2 vector, float? x = null, float? y = null)
+			=> new Vector2(x ?? vector.x, y ?? vector.y);
+
+		/// <summary>
+		///     Adds to any x y _values of a Vector2
+		/// </summary>
+		public static Vector2 Add(this Vector2 vector, float x = 0, float y = 0)
+			=> new Vector2(vector.x + x, vector.y + y);
+
+		/// <summary>
+		/// Returns distance between 2 points using the more optimized method of root of squared magnitude method
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="destination"></param>
+		/// <returns></returns>
+		public static float SqrMagnitudeDistance(this Vector2 source, Vector2 destination) => Mathf.Sqrt((source - destination).sqrMagnitude);
+
+		/// <summary>
+		///     Returns a Boolean indicating whether the current Vector3 is in a given range from another Vector3
+		/// </summary>
+		/// <param name="current">The current Vector2 position</param>
+		/// <param name="target">The Vector2 position to compare against</param>
+		/// <param name="range">The range value to compare against</param>
+		/// <returns>True if the current Vector2 is in the given range from the target Vector3, false otherwise</returns>
+		public static bool InRangeOf(this Vector2 current, Vector2 target, float range) => (current - target).sqrMagnitude <= range * range;
+
+		public static Vector2 SetPrecision(this Vector2 current, int precision) =>
+			new Vector2(current.x.SetPrecision(precision), current.y.SetPrecision(precision));
+	}
+
 	public static class TransformExtensions
 	{
 		/// <summary>
@@ -129,6 +164,11 @@ namespace AstekUtility
 			{
 				action(parent.GetChild(i));
 			}
+		}
+
+		public static T GetComponentInChildOrParent<T>(this Transform obj)
+		{
+			return obj.GetComponentInChildren<T>() ?? obj.GetComponentInParent<T>();
 		}
 	}
 
@@ -440,6 +480,22 @@ namespace AstekUtility
 			{
 				action(item);
 			}
+		}
+	}
+
+	public static class QuaternionExtensions
+	{
+		/// <summary>
+		/// Measure if 2 quaternions are equal with provided tolerance.
+		/// </summary>
+		/// <param name="q1"></param>
+		/// <param name="q2"></param>
+		/// <param name="tolerance">Between 0 and 1</param>
+		/// <returns></returns>
+		public static bool IsRotationApproximatelySame(this Quaternion q1, Quaternion q2, float tolerance = 0f)
+		{
+				float dot = Quaternion.Dot(q1, q2);
+				return Mathf.Abs(dot) > (1.0f - Mathf.Clamp(tolerance,0,1));
 		}
 	}
 }

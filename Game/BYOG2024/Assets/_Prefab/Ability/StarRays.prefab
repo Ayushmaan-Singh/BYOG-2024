@@ -9904,47 +9904,10 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: <enemyTypeForEvolution>k__BackingField
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[Combat.EnemyTypes, Assembly-CSharp],[System.Int32,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Combat.EnemyTypes,
-        Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1
-    - Name: $v
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
   <AbilityIcon>k__BackingField: {fileID: 0}
-  <AbilityDescription>k__BackingField: 
+  <AbilityTileImage>k__BackingField: {fileID: 0}
+  <AbilityDescription>k__BackingField: Star rays
   damagePerHit: 10
   cooldown: 7
   attackPrefab: {fileID: 1690768130923285160, guid: 8ab56385618169f4f8aae44a8d049057,

@@ -17,6 +17,13 @@
       },
       "hash": "b849990020c30ac6ead4e4fb4881428f86dcde0d"
     },
+    "com.github.siccity.xnode": {
+      "version": "https://github.com/Siccity/xNode.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d6effd70f5574369e3415c423ef3e621ea309564"
+    },
     "com.unity.2d.animation": {
       "version": "9.1.0",
       "depth": 1,
@@ -389,6 +396,15 @@
         "com.unity.ext.nunit": "1.0.6",
         "com.unity.modules.imgui": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.textmeshpro": {
+      "version": "3.0.9",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },

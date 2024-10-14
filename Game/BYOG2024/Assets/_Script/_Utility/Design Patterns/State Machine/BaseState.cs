@@ -1,21 +1,21 @@
-namespace AstekUtility.StateMachine
+namespace AstekUtility.DesignPattern.StateMachine
 {
 	public interface IState
 	{
-		void OnEnter();
-		void Update();
-		void FixedUpdate();
-		void OnExit();
+		void OnStateEnter();
+		void FrameUpdate();
+		void PhysicsUpdate();
+		void OnStateExit();
 	}
 
 	public abstract class BaseState : IState
 	{
-		public abstract void OnEnter();
+		public abstract void OnStateEnter();
 
-		public abstract void Update();
+		public abstract void FrameUpdate();
 
-		public abstract void FixedUpdate();
+		public abstract void PhysicsUpdate();
 
-		public abstract void OnExit();
+		public abstract void OnStateExit();
 	}
 }

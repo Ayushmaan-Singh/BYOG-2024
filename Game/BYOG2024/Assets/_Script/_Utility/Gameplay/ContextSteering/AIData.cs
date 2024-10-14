@@ -4,19 +4,18 @@ namespace AstekUtility.Gameplay
 {
 	public class AIData
 	{
-		public Dictionary<Detector, Collider[]> AvoidedObjectCollection;
+		public Dictionary<Detector, Collider[]> AvoidedObjectCollection = new Dictionary<Detector, Collider[]>();
 
 		public Collider CurrentTarget;
-		public Collider[] Targets;
+		public List<Collider> Targets;
 
 		public AIData()
 		{
-			AvoidedObjectCollection = new Dictionary<Detector, Collider[]>();
 		}
-		
+
 		public int GetTargetsCount()
 		{
-			return Targets == null ? 0 : Targets.Length;
+			return Targets?.Count ?? 0;
 		}
 	}
 }

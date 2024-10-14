@@ -30,7 +30,7 @@ namespace AstekUtility.Gameplay
 			if (!_mainModel)
 				return;
 
-			_aiData.Targets = Physics.OverlapSphere(_mainModel.position, detectionRadius, detectObjectInLayer);
+			_aiData.Targets = Physics.OverlapSphere(_mainModel.position, detectionRadius, detectObjectInLayer).ToList();
 		}
 	}
 }

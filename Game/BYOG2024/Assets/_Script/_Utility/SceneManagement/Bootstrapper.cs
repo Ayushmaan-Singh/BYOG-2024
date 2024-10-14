@@ -7,7 +7,7 @@ namespace AstekUtility.SceneManagement
 	public class Bootstrapper : PersistentSingleton<Bootstrapper>
 	{
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-		static async void Init()
+		private static async void Init()
 		{
 			Debug.Log("Bootstrapper........");
 			if (SceneManager.GetActiveScene().name != "GameMaster")

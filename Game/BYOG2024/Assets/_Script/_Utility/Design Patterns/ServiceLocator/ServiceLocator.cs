@@ -241,12 +241,12 @@ namespace AstekUtility.DesignPattern.ServiceLocatorTool
 			throw new ArgumentException($"Could not resolve type '{typeof(T).FullName}'.");
 		}
 
-		private bool TryGetService<T>(out T service) where T : class
+		public bool TryGetService<T>(out T service) where T : class
 		{
 			return _services.TryGet(out service);
 		}
 
-		private bool TryGetService<T>(Type type, out T service) where T : class
+		public bool TryGetService<T>(Type type, out T service) where T : class
 		{
 			return _services.TryGet(out service);
 		}

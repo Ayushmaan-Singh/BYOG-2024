@@ -21,6 +21,8 @@ namespace AstekUtility.Observer
 	{
 		public interface ISubject<T>
 		{
+			T Data { get; }
+
 			void Attach(params IObserver<T>[] observer);
 			void Detach(params IObserver<T>[] observer);
 			void Notify(T changedValue);
@@ -29,7 +31,9 @@ namespace AstekUtility.Observer
 		public class UnmanagedSubject<T> : ISubject<T>
 		{
 			private readonly List<IObserver<T>> _observers = new List<IObserver<T>>();
-			public T Data { get; private set; }
+			private T _data;
+			
+			public T Data=>_data;
 
 			public void Attach(params IObserver<T>[] observer)
 			{
@@ -55,7 +59,7 @@ namespace AstekUtility.Observer
 
 			public void Notify(T changedValue)
 			{
-				Data = changedValue;
+				_data = changedValue;
 				foreach (IObserver<T> obs in _observers)
 				{
 					obs.OnNotify(this);

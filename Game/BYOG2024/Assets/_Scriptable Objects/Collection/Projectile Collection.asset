@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5452ed3828f04cfe8d30a877da94607f, type: 3}
+  m_Name: Projectile Collection
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 3886017215097831193, guid: 3397d95d664d87b4d86b2b6adb0937fc, type: 3}
+    - {fileID: 3886017215097831193, guid: ecca7d143f8d1d048b3f986c6860ddab, type: 3}
+    - {fileID: 3886017215097831193, guid: 6996618639e85f4418fe2148926dbe64, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: _prefabs
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.Type, mscorlib],[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[System.Type, mscorlib]],
+        mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: 2|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Entity.Abilities.FireShot, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: 3|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Entity.Abilities.DecayShot, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: 4|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Entity.Abilities.ElectricShot, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 

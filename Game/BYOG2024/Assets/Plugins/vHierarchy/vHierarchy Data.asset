@@ -12,6 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9752b0c8e144801967e6897679604b, type: 3}
   m_Name: vHierarchy Data
   m_EditorClassIdentifier: 
-  sceneDatasByGuid:
-    keys: []
-    values: []
+  sceneDatas_byGuid:
+    keys:
+    - 99c9720ab356a0642a771bea13969a05
+    values:
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1325699602-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1549352773-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1567115790-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1576715365-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-393214059-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1338070747-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-953580581-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1817835541-0
+        values:
+        - colorIndex: 2
+          iconNameOrGuid: Camera Icon
+        - colorIndex: 3
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 7
+          iconNameOrGuid: PreMatCylinder
+        - colorIndex: 8
+          iconNameOrGuid: PreMatCylinder
+        - colorIndex: 9
+          iconNameOrGuid: Settings Icon
+        - colorIndex: 4
+          iconNameOrGuid: Settings Icon
+        - colorIndex: 9
+          iconNameOrGuid: PreMatCylinder
+        - colorIndex: 0
+          iconNameOrGuid: AudioSource Icon

@@ -1,5 +1,5 @@
 using System;
-namespace AstekUtility.StateMachine
+namespace AstekUtility.DesignPattern.StateMachine
 {
 	public interface IPredicate
 	{
@@ -11,7 +11,7 @@ namespace AstekUtility.StateMachine
     /// </summary>
     public class Predicate : IPredicate
 	{
-		public readonly Func<bool> Func;
+		private readonly Func<bool> Func;
 
 		public Predicate(Func<bool> func)
 		{
@@ -25,13 +25,13 @@ namespace AstekUtility.StateMachine
 	}
 
     /// <summary>
-    ///     Evaluates given condition to identify if we can change state
-    ///     Can also take an input of generic type.
+    /// Evaluates given condition to identify if we can change state
+    /// Can also take an input of generic type.
     /// </summary>
     /// <typeparam name="T">input type for a Func</typeparam>
     public class Predicate<T> : IPredicate
 	{
-		public readonly Func<T, bool> Func;
+		private readonly Func<T, bool> Func;
 		private T _data;
 
 		public Predicate(Func<T, bool> func)

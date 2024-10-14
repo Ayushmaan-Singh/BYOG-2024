@@ -1,4 +1,4 @@
-namespace AstekUtility.StateMachine
+namespace AstekUtility.DesignPattern.StateMachine
 {
 	public interface ITransition
 	{

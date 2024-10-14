@@ -54,7 +54,7 @@ namespace AstekUtility.Gameplay
 			}
 		}
 
-		public Vector3 UpdatePosition()
+		public Vector3 UpdateDirection()
 		{
 			foreach (Detector detector in _detectors)
 			{

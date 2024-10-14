@@ -1,0 +1,407 @@
+{
+    "name": "PlayerInput",
+    "maps": [
+        {
+            "name": "Combat",
+            "id": "f896529a-3420-4fa6-ae41-fcbf2909f75b",
+            "actions": [
+                {
+                    "name": "Movement",
+                    "type": "Value",
+                    "id": "ba19f78b-ff78-4eff-8608-9e01ac596384",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "0f77a772-950d-45bb-ac5c-8c6f9849dca5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ChangeAttack",
+                    "type": "Value",
+                    "id": "a3a4df9b-f66d-4397-a529-5636babb18ac",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Gluttony",
+                    "type": "Button",
+                    "id": "1431955f-0584-4f64-8dc0-8317be165e5f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "2D Vector",
+                    "id": "5359a672-516b-4d2b-8d56-7837b749df4c",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "ced99d44-cb9c-4e20-a6e4-f96933f97c3c",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "f2ffaef7-8674-4083-aed2-1ecabdfd4773",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "190f9fc5-b577-44d8-a31b-a8f7ee8d53f9",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "92b0e05b-7928-404e-a37f-d3e562eb84e9",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "527f812c-88d4-47a1-a14d-6fcb14bf2f32",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "289d89cc-c92b-4e86-9f22-47696b0acfe7",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeAttack",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "155d9b8e-ae20-45f5-baf5-c1aafd7e8cea",
+                    "path": "<Mouse>/scroll/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "ChangeAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "2b92014e-e2e7-46a9-839b-f197000f4489",
+                    "path": "<Mouse>/scroll/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "ChangeAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "e5512489-5ca8-44ad-9f1b-741b7f4b9dcf",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Gluttony",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Combat UI",
+            "id": "6b65d1c0-28e4-42f9-b3c9-ee0d7b5b9919",
+            "actions": [
+                {
+                    "name": "Right Click",
+                    "type": "Button",
+                    "id": "f238b14c-bd79-4663-9da5-bfe9526c4d6f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Left Click",
+                    "type": "Button",
+                    "id": "bc588edc-9084-4b86-a568-920e2d18cee5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "762e0e0e-63f5-4cd1-9678-933881fd24db",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Right Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a2d88eff-6bce-45ac-a1ae-fdddc2d99bc8",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Left Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Menu UI",
+            "id": "2975e2da-230e-44b6-b40b-0a88e10e255a",
+            "actions": [
+                {
+                    "name": "RIghtClick",
+                    "type": "Button",
+                    "id": "082fc054-da22-488a-a27a-89e4f3345d71",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftClick",
+                    "type": "Button",
+                    "id": "d8eacac7-d712-4802-94d3-f2a76a35250a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Navigation WASD",
+                    "type": "Value",
+                    "id": "14c56b50-e2cb-45f9-904f-dfb5e688f969",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Navigation Arrow",
+                    "type": "Value",
+                    "id": "02ad9882-842d-4140-8abe-e5cf287fdfb8",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c4753cbf-bbff-4051-9aaa-d631bb6baaab",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "RIghtClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "22bce4e9-8e07-4f96-a921-09bc6c424acb",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "LeftClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "c68665e2-dfe9-451a-8a21-5fe66b50b392",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigation WASD",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "8c33380a-80cd-4a6b-9550-4cd355e5d98e",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Navigation WASD",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "5e8e49ec-4be6-4385-ad37-dfbc7f7fa8a5",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Navigation WASD",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "0579f60f-da7a-46f3-9396-3942fbec5fb7",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Navigation WASD",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "fdc79a82-f013-4bf0-ba6c-702d91d845ab",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Navigation WASD",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "29eac1ec-999e-45c5-bdfe-b1e324c351f0",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigation Arrow",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "6b445a9d-25ed-4acd-8f11-9630951f9b23",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Navigation Arrow",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "e75ad738-724e-4986-9c07-adb8fbb73c1f",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Navigation Arrow",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "b5e0c6b8-37be-443e-840d-f9e85f53b535",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Navigation Arrow",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "1e1bd69e-67d3-409c-97c1-1af639c61367",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Pc",
+                    "action": "Navigation Arrow",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Null",
+            "id": "53282a74-1f50-441f-b46a-45ad68aa0223",
+            "actions": [],
+            "bindings": []
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Pc",
+            "bindingGroup": "Pc",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

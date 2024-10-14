@@ -50,6 +50,8 @@ namespace AstekUtility.Gameplay.Timer
 
 	public class CountdownTimer : Timer
 	{
+		public new float Progress => (_initialTime - Time) / _initialTime;
+		
 		public CountdownTimer(float value) : base(value) { }
 
 		public override void Tick(float deltaTime)
@@ -64,6 +66,8 @@ namespace AstekUtility.Gameplay.Timer
 				Stop();
 			}
 		}
+
+		public bool IsStopped => Time > 0 && !IsRunning;
 
 		public bool IsFinished => Time <= 0;
 
