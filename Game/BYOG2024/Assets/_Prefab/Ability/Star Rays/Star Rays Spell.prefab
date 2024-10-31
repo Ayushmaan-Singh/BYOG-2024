@@ -9,8 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5832063197191808830}
-  - component: {fileID: 2181989260188378284}
-  - component: {fileID: 5854183098239019155}
+  - component: {fileID: 8536780290231399792}
+  - component: {fileID: 6808943079483257102}
+  - component: {fileID: 9213388218549668539}
+  - component: {fileID: 536136236014833841}
   m_Layer: 0
   m_Name: Star Rays Spell
   m_TagString: Untagged
@@ -35,7 +37,7 @@ Transform:
   - {fileID: 3238807506565364021}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2181989260188378284
+--- !u!114 &8536780290231399792
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,10 +46,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1690768130923285160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 682dac313c6d4486bb60e3fff1160309, type: 3}
+  m_Script: {fileID: 11500000, guid: 01b1ed2b9fbf10b4bb0e3dccce8b060b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5854183098239019155
+--- !u!114 &6808943079483257102
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,16 +58,48 @@ MonoBehaviour:
   m_GameObject: {fileID: 1690768130923285160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b63c6b337ffe9e489c4f8ac8f5cc9c0, type: 3}
+  m_Script: {fileID: 11500000, guid: a122baee959f8a84a971cb4b0520027e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleSystems:
+  _particleSystems:
   - {fileID: 3820601324084880121}
   - {fileID: 7398837854532536523}
   - {fileID: 1849399174896808689}
   - {fileID: 5299392774322613387}
   - {fileID: 6978355931973878941}
+  - {fileID: 2200142716611346136}
+  - {fileID: 6006985693690149981}
+  - {fileID: 3232512653379916193}
   - {fileID: 8376243511695513237}
+  _destroyOnFinish: 0
+--- !u!114 &9213388218549668539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690768130923285160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9694e779f70a479a9890f91a8138d3f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+--- !u!114 &536136236014833841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690768130923285160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e3621b32d50844faa37723f5a385a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  includeLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1996358640287677266
 GameObject:
   m_ObjectHideFlags: 0
@@ -77,7 +111,6 @@ GameObject:
   - component: {fileID: 4817282488012959638}
   - component: {fileID: 6978355931973878941}
   - component: {fileID: 6352305382009634011}
-  - component: {fileID: 6266775532438326613}
   m_Layer: 0
   m_Name: Explosion_Stars_01
   m_TagString: Untagged
@@ -4977,33 +5010,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &6266775532438326613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1996358640287677266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10fe33429ee2fc64284e7e51e5357748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onParticleSystemStopped:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5854183098239019155}
-        m_TargetAssemblyTypeName: Entity.Abilities.ParticleEffectMediator, Assembly-CSharp
-        m_MethodName: ParticleFinished
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 6978355931973878941}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &2538090737066365479
 GameObject:
   m_ObjectHideFlags: 0
@@ -5015,7 +5021,6 @@ GameObject:
   - component: {fileID: 3574436510987960311}
   - component: {fileID: 7398837854532536523}
   - component: {fileID: 1208213081249024653}
-  - component: {fileID: 6985110477854058774}
   m_Layer: 0
   m_Name: Indicator_Shadow_01
   m_TagString: Untagged
@@ -9914,33 +9919,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &6985110477854058774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2538090737066365479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10fe33429ee2fc64284e7e51e5357748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onParticleSystemStopped:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5854183098239019155}
-        m_TargetAssemblyTypeName: Entity.Abilities.ParticleEffectMediator, Assembly-CSharp
-        m_MethodName: ParticleFinished
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 7398837854532536523}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &3021146798961763358
 GameObject:
   m_ObjectHideFlags: 0
@@ -9985,7 +9963,6 @@ GameObject:
   - component: {fileID: 8807003037327335572}
   - component: {fileID: 8376243511695513237}
   - component: {fileID: 457176243948784896}
-  - component: {fileID: 4254646468265410419}
   m_Layer: 0
   m_Name: Explosion_LightImpact_01
   m_TagString: Untagged
@@ -14875,33 +14852,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &4254646468265410419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4437105653895572831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10fe33429ee2fc64284e7e51e5357748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onParticleSystemStopped:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5854183098239019155}
-        m_TargetAssemblyTypeName: Entity.Abilities.ParticleEffectMediator, Assembly-CSharp
-        m_MethodName: ParticleFinished
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8376243511695513237}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &5999750430248603097
 GameObject:
   m_ObjectHideFlags: 0
@@ -14913,7 +14863,7 @@ GameObject:
   - component: {fileID: 3885982812681664012}
   - component: {fileID: 5299392774322613387}
   - component: {fileID: 5022960973663839048}
-  - component: {fileID: 1808551850136850303}
+  - component: {fileID: 7493343479794254985}
   m_Layer: 0
   m_Name: Explosion_Ray_01
   m_TagString: Untagged
@@ -18598,14 +18548,14 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     type: 1
     collisionMode: 0
     colliderForce: 0
-    multiplyColliderForceByParticleSize: 1
+    multiplyColliderForceByParticleSize: 0
     multiplyColliderForceByParticleSpeed: 0
-    multiplyColliderForceByCollisionAngle: 1
+    multiplyColliderForceByCollisionAngle: 0
     m_Planes:
     - {fileID: 0}
     - {fileID: 0}
@@ -18669,7 +18619,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -18774,7 +18724,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 0
-    radiusScale: 1
+    radiusScale: 2
     collidesWith:
       serializedVersion: 2
       m_Bits: 64
@@ -19830,7 +19780,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &1808551850136850303
+--- !u!114 &7493343479794254985
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19839,24 +19789,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 5999750430248603097}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10fe33429ee2fc64284e7e51e5357748, type: 3}
+  m_Script: {fileID: 11500000, guid: aecae16b3d76aa3469e630a21dbf5575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onParticleSystemStopped:
+  onCollisionEnter:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5854183098239019155}
-        m_TargetAssemblyTypeName: Entity.Abilities.ParticleEffectMediator, Assembly-CSharp
-        m_MethodName: ParticleFinished
-        m_Mode: 2
+      - m_Target: {fileID: 8536780290231399792}
+        m_TargetAssemblyTypeName: Entity.Abilities.StarRaysSpell, Assembly-CSharp
+        m_MethodName: OnParticleCollisionEnter
+        m_Mode: 0
         m_Arguments:
-          m_ObjectArgument: {fileID: 5299392774322613387}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onCollisionStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onCollisionExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _showGizmo: 1
 --- !u!1 &6479315210841896365
 GameObject:
   m_ObjectHideFlags: 0
@@ -19868,7 +19825,6 @@ GameObject:
   - component: {fileID: 4804447748610374974}
   - component: {fileID: 3820601324084880121}
   - component: {fileID: 5395776389282579238}
-  - component: {fileID: 2146012334924126184}
   m_Layer: 0
   m_Name: Indicator_Emissive_01
   m_TagString: Untagged
@@ -24767,33 +24723,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &2146012334924126184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6479315210841896365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10fe33429ee2fc64284e7e51e5357748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onParticleSystemStopped:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5854183098239019155}
-        m_TargetAssemblyTypeName: Entity.Abilities.ParticleEffectMediator, Assembly-CSharp
-        m_MethodName: ParticleFinished
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3820601324084880121}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &6514307076837481216
 GameObject:
   m_ObjectHideFlags: 0
@@ -24805,14 +24734,13 @@ GameObject:
   - component: {fileID: 5331331455448825351}
   - component: {fileID: 3232512653379916193}
   - component: {fileID: 1798967615973733916}
-  - component: {fileID: 1177068578570714187}
   m_Layer: 0
   m_Name: Explosion_Fire_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5331331455448825351
 Transform:
   m_ObjectHideFlags: 0
@@ -29695,33 +29623,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &1177068578570714187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6514307076837481216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10fe33429ee2fc64284e7e51e5357748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onParticleSystemStopped:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5854183098239019155}
-        m_TargetAssemblyTypeName: Entity.Abilities.ParticleEffectMediator, Assembly-CSharp
-        m_MethodName: ParticleFinished
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3232512653379916193}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &6793082980692405012
 GameObject:
   m_ObjectHideFlags: 0
@@ -29733,7 +29634,6 @@ GameObject:
   - component: {fileID: 3331739613225975598}
   - component: {fileID: 6006985693690149981}
   - component: {fileID: 3497665462337841668}
-  - component: {fileID: 346592726531383254}
   m_Layer: 0
   m_Name: Explosion_Flare_01
   m_TagString: Untagged
@@ -34623,33 +34523,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &346592726531383254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6793082980692405012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10fe33429ee2fc64284e7e51e5357748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onParticleSystemStopped:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5854183098239019155}
-        m_TargetAssemblyTypeName: Entity.Abilities.ParticleEffectMediator, Assembly-CSharp
-        m_MethodName: ParticleFinished
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 6006985693690149981}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &7478667443153919970
 GameObject:
   m_ObjectHideFlags: 0
@@ -34661,7 +34534,6 @@ GameObject:
   - component: {fileID: 1249689961958602291}
   - component: {fileID: 2200142716611346136}
   - component: {fileID: 8747075269183005676}
-  - component: {fileID: 716197243012052079}
   m_Layer: 0
   m_Name: Explosion_Wave_01
   m_TagString: Untagged
@@ -39551,33 +39423,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &716197243012052079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7478667443153919970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10fe33429ee2fc64284e7e51e5357748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onParticleSystemStopped:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5854183098239019155}
-        m_TargetAssemblyTypeName: Entity.Abilities.ParticleEffectMediator, Assembly-CSharp
-        m_MethodName: ParticleFinished
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2200142716611346136}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &7633141977071904137
 GameObject:
   m_ObjectHideFlags: 0
@@ -39621,7 +39466,6 @@ GameObject:
   - component: {fileID: 2535545710811856865}
   - component: {fileID: 1849399174896808689}
   - component: {fileID: 6955608313345452206}
-  - component: {fileID: 5880509822458049610}
   m_Layer: 0
   m_Name: Explosion_Control
   m_TagString: Untagged
@@ -44511,30 +44355,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &5880509822458049610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8626167529276456184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10fe33429ee2fc64284e7e51e5357748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onParticleSystemStopped:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5854183098239019155}
-        m_TargetAssemblyTypeName: Entity.Abilities.ParticleEffectMediator, Assembly-CSharp
-        m_MethodName: ParticleFinished
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1849399174896808689}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2

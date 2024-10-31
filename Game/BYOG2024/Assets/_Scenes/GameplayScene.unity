@@ -3093,7 +3093,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilities:
   - {fileID: 1480582576}
-  - {fileID: 8432311660952251210}
+  - {fileID: 3712436214301794691}
   abilityHolder: {fileID: 125165882}
   gluttonyAbility: {fileID: 859544051}
 --- !u!114 &409761211
@@ -16814,10 +16814,40 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1168874951696366128, guid: 69a6fc674b7023444beaaac4e730c65a,
         type: 3}
+      propertyPath: indicator
+      value: 
+      objectReference: {fileID: 3712436214301794690}
+    - target: {fileID: 1168874951696366128, guid: 69a6fc674b7023444beaaac4e730c65a,
+        type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 1168874951696366128, guid: 69a6fc674b7023444beaaac4e730c65a,
         type: 3}
+    - target: {fileID: 2464322827348188494, guid: 69a6fc674b7023444beaaac4e730c65a,
+        type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2464322827348188494, guid: 69a6fc674b7023444beaaac4e730c65a,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3741913406223795360, guid: 69a6fc674b7023444beaaac4e730c65a,
+        type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3741913406223795360, guid: 69a6fc674b7023444beaaac4e730c65a,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3872798422034709631, guid: 69a6fc674b7023444beaaac4e730c65a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7752564792330250725, guid: 69a6fc674b7023444beaaac4e730c65a,
         type: 3}
       propertyPath: m_Name
@@ -16826,13 +16856,31 @@ PrefabInstance:
     - target: {fileID: 7752564792330250725, guid: 69a6fc674b7023444beaaac4e730c65a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69a6fc674b7023444beaaac4e730c65a, type: 3}
+--- !u!1 &3712436214301794690 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3872798422034709631, guid: 69a6fc674b7023444beaaac4e730c65a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3712436214301794689}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3712436214301794691 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1168874951696366128, guid: 69a6fc674b7023444beaaac4e730c65a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3712436214301794689}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26116595cfe63cb4da824778cf97f45d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3885458910503791608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17405,18 +17453,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cb91994aa37ee74cae56e2a9c408eca, type: 3}
---- !u!114 &8432311660952251210 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8761247966251671422, guid: 1cb91994aa37ee74cae56e2a9c408eca,
-    type: 3}
-  m_PrefabInstance: {fileID: 8432311660952251209}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8437701a28b502d45bcdb879b186dc87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!20 &8585925619975323068
 Camera:
   m_ObjectHideFlags: 0

@@ -49,8 +49,8 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
   looping: 1
-  prewarm: 0
-  playOnAwake: 0
+  prewarm: 1
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -4924,7 +4924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &942121880706042483
 Transform:
   m_ObjectHideFlags: 0
@@ -4991,8 +4991,8 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
   looping: 1
-  prewarm: 0
-  playOnAwake: 0
+  prewarm: 1
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -9904,15 +9904,19 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: localOffsetFromModel
+      Entry: 6
+      Data: 
   <AbilityIcon>k__BackingField: {fileID: 0}
   <AbilityTileImage>k__BackingField: {fileID: 0}
   <AbilityDescription>k__BackingField: Star rays
-  damagePerHit: 10
+  raysDamage: 5
+  damageIncrement: 5
   cooldown: 7
-  attackPrefab: {fileID: 1690768130923285160, guid: 8ab56385618169f4f8aae44a8d049057,
+  indicator: {fileID: 3872798422034709631}
+  _includeLayers:
+    serializedVersion: 2
+    m_Bits: 4096
+  spellPrefab: {fileID: 1690768130923285160, guid: 8ab56385618169f4f8aae44a8d049057,
     type: 3}
-  indicatorHolder: {fileID: 942121880706042483}
-  indicators:
-  - {fileID: 3741913406223795360}
-  - {fileID: 2464322827348188494}

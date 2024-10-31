@@ -1,17 +1,16 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using AstekUtility;
 using AstekUtility.Gameplay;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace Entity.Abilities
 {
-	public class HammerDropSpell : SpellBase
+	public class StarRaysSpell : SpellBase
 	{
-		private float _hammerDropDamage;
-		private float _shockWaveDamage;
+		private float _rayDamage;
+		private float _damageIncrement;
+		private int _damageIncrementCount;
 		private CollisionLayerFilter _collisionLayerFilter;
 		
 		private void Awake()
@@ -29,11 +28,12 @@ namespace Entity.Abilities
 		{
 			GetComponent<ParticleFX>().OnParticleEffectFinished -= OnParticleEffectFinished;
 			_collisionLayerFilter.SetLayers(0);
-			_hammerDropDamage = 0;
-			_shockWaveDamage = 0;
+			_rayDamage = 0;
+			_damageIncrement = 0;
+			_damageIncrementCount = 0;
 		}
 
-		public HammerDropSpell Execute()
+		public StarRaysSpell Execute()
 		{
 			GetComponent<ParticleFX>().Play();
 			return this;
@@ -42,7 +42,7 @@ namespace Entity.Abilities
 		private void OnParticleEffectFinished(ParticleFX particleFX)
 		{
 			gameObject.SetActive(false);
-			HammerDropAbility ability = GetComponent<OwnerOfThisObject>().Owner?.GetComponent<HammerDropAbility>();
+			StarRaysAbility ability = GetComponent<OwnerOfThisObject>().Owner?.GetComponent<StarRaysAbility>();
 			if (ability.OrNull())
 				ability?.PoolObject(gameObject);
 			else
@@ -55,24 +55,15 @@ namespace Entity.Abilities
 				return;
 
 			IDamageable damageable = collision.gameObject.GetComponentInParent<IDamageable>();
-			damageable.Damage(_shockWaveDamage);
-		}
-
-		public void OnCollisionEnter(Collision collision)
-		{
-			if (!_collisionLayerFilter.CanCollide(collision.gameObject))
-				return;
-
-			Debug.Log("Hammer DMG");
-			IDamageable damageable = collision.gameObject.GetComponentInParent<IDamageable>();
-			damageable.Damage(_hammerDropDamage);
+			damageable.Damage(_rayDamage*_damageIncrementCount);
+			_damageIncrementCount++;
 		}
 
 		public class Builder
 		{
 			private LayerMask _includeLayers;
-			private float _hammerDropDamage;
-			private float _shockwaveDamage;
+			private float _rayDamage;
+			private float _damageIncrement;
 			private Transform _owner;
 
 			public Builder InitCollisionLayers(LayerMask layers)
@@ -81,15 +72,15 @@ namespace Entity.Abilities
 				return this;
 			}
 
-			public Builder InitHammerDropDamage(float damage)
+			public Builder InitRayDamage(float damage)
 			{
-				_hammerDropDamage = damage;
+				_rayDamage = damage;
 				return this;
 			}
 			
-			public Builder InitShockwaveDamage(float damage)
+			public Builder InitDamageIncrementPerHit(float damage)
 			{
-				_shockwaveDamage = damage;
+				_rayDamage = damage;
 				return this;
 			}
 
@@ -99,11 +90,10 @@ namespace Entity.Abilities
 				return this;
 			}
 
-			public HammerDropSpell Build(HammerDropSpell instance)
+			public StarRaysSpell Build(StarRaysSpell instance)
 			{
 				instance._collisionLayerFilter.SetLayers(_includeLayers);
-				instance._hammerDropDamage = _hammerDropDamage;
-				instance._shockWaveDamage = _shockwaveDamage;
+				instance._rayDamage = _rayDamage;
 				instance.GetComponent<OwnerOfThisObject>().SetOwner(_owner);
 
 				instance.enabled = true;
