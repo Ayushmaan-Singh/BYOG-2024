@@ -1,13 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using AstekUtility;
 using AstekUtility.DesignPattern.ServiceLocatorTool;
 using AstekUtility.Gameplay.Timer;
 using AstekUtility.Input;
-using Combat;
 using Entity.Player;
-using Global.Pool;
 using UnityEngine;
 
 namespace Entity.Abilities
@@ -120,9 +117,9 @@ namespace Entity.Abilities
 
 			CurrentState = State.InProgress;
 			Vector3 mousePos = ServiceLocator.Global.Get<InputUtils.MousePosition>().Invoke();
-			Transform holder = ServiceLocator.ForSceneOf(this).Get<ParticleEffectsInGameObjectPool>().transform;
-			GameObject spawn = Instantiate(particleEffect, mousePos, Quaternion.identity, holder);
-			spawn.GetComponentInChildren<OnCollisionStayEvent_Alternate>().Register(ObjectInCollision);
+			// Transform holder = ServiceLocator.ForSceneOf(this).Get<ParticleEffectsInGameObjectPool>().transform;
+			// GameObject spawn = Instantiate(particleEffect, mousePos, Quaternion.identity, holder);
+			// spawn.GetComponentInChildren<OnCollisionStayEvent_Alternate>().Register(ObjectInCollision);
 			_damageTick.Start();
 		}
 

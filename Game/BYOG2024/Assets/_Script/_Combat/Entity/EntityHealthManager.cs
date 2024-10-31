@@ -6,6 +6,7 @@ using AstekUtility.DesignPattern.ServiceLocatorTool;
 using AstekUtility.VisualFeedback;
 using Combat;
 using Entity.Abilities;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Entity
@@ -17,15 +18,16 @@ namespace Entity
 
 		private float _currentHP;
 		public bool IsAlive => _currentHP > 0;
-		public float CurrentHP => _currentHP;
+		[ShowInInspector]public float CurrentHP => _currentHP;
 
-		private void Awake()
+		private void OnEnable()
 		{
 			ServiceLocator.For(this).Register(this);
 		}
 
-		private void OnDestroy()
+		private void OnDisable()
 		{
+			Debug.Break();
 			ServiceLocator.For(this)?.Deregister(this);
 		}
 
@@ -41,11 +43,11 @@ namespace Entity
 				_currentHP = Mathf.Clamp(_currentHP - amount, 0, ServiceLocator.For(this).Get<EntityStatSystem>().GetInstanceStats(Stats.Hp));
 				if (amount > 0)
 					meshFlashFX?.Play();
-				
+
 				if (!IsAlive)
 				{
 					//Death Animation
-					Invoke(nameof(DestroyBodyAfter),bodyDecayAfter);
+					Invoke(nameof(DestroyBodyAfter), bodyDecayAfter);
 				}
 			}
 		}
@@ -60,5 +62,15 @@ namespace Entity
 		{
 			Destroy(ServiceLocator.For(this).gameObject);
 		}
+
+		#if UNITY_EDITOR
+
+		[Button]
+		private void ReduceHealthTo(float amount)
+		{
+			_currentHP = amount;
+		}
+
+		#endif
 	}
 }

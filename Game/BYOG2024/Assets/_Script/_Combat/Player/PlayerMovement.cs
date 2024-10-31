@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using AstekUtility;
 using AstekUtility.DesignPattern.ServiceLocatorTool;
 using AstekUtility.Input;
@@ -18,26 +19,37 @@ namespace Entity.Player
 		[SerializeField, Range(0f, 1f)] private float speedLossDetectionOnMovingSideThreshold;
 		[SerializeField, Range(0f, 1f)] private float speedLossDetectionOnMovingBackThreshold;
 
+		public Vector3 PlayerFacingInDirection => ServiceLocator.Global.Get<InputUtils.MousePosition>()?.Invoke() ?? rb.transform.forward
+			- rb.position.With(y:0);
+
 		private Vector3 movementDir = Vector3.zero;
 
 		private ServiceLocator _serviceLocator;
 		private static readonly int ZDir = Animator.StringToHash("ZDir");
 		private static readonly int XDir = Animator.StringToHash("XDir");
 
+		private float _forceDuration = 0.1f;
+		private bool _forceBeingApplied = false;
 		private float _currentSpeed;
 
-		private void Awake()
+		private void OnEnable()
 		{
 			_serviceLocator = ServiceLocator.For(this).Register(this);
 		}
 
-		private void OnDestroy()
+		private void OnDisable()
 		{
 			ServiceLocator.For(this)?.Deregister(this);
 		}
 
 		private void FixedUpdate()
 		{
+			if (_forceBeingApplied)
+			{
+				movementDir = Vector3.zero;
+				AnimationDirection();
+				return;
+			}
 
 			AnimationDirection();
 			if (rb && movementDir != Vector3.zero)
@@ -76,6 +88,24 @@ namespace Entity.Player
 			float reduction = (relativeDirection.x > speedLossDetectionOnMovingSideThreshold || relativeDirection.x < -speedLossDetectionOnMovingSideThreshold ? _currentSpeed * speedPercentLossOnSideMovement / 100f : 0)
 			                  + (relativeDirection.z < -speedLossDetectionOnMovingBackThreshold ? _currentSpeed * speedPercentLossOnBackMovement / 100f : 0);
 			_currentSpeed -= reduction;
+		}
+
+		public void ApplyImpulseForce(Vector3 direction, float magnitude)
+		{
+			StartCoroutine(ApplyImpulse(direction, magnitude));
+		}
+		private IEnumerator ApplyImpulse(Vector3 direction, float magnitude)
+		{
+			_forceBeingApplied = true;
+			float timeElapsed = 0;
+
+			while (timeElapsed < _forceDuration)
+			{
+				rb.MovePosition(rb.position + direction * (magnitude * Time.deltaTime) / _forceDuration);
+				timeElapsed += Time.deltaTime;
+				yield return new WaitForFixedUpdate();
+			}
+			_forceBeingApplied = false;
 		}
 	}
 }

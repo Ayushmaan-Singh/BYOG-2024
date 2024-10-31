@@ -11,13 +11,13 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: 3a885ef23d81c9a4b830b72693a32aa8,
     type: 3}
   m_Parent: {fileID: 2100000, guid: 2606da1e5160fc5438a8d5ac033edea2, type: 2}
-  m_ModifiedSerializedProperties: 2
+  m_ModifiedSerializedProperties: 22
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 2
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3010
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
@@ -31,6 +31,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _FlashAmount: 0
+    - _QueueOffset: 10
     m_Colors:
     - _FlashColor: {r: 2, g: 2, b: 2, a: 1}
   m_BuildTextureStacks: []

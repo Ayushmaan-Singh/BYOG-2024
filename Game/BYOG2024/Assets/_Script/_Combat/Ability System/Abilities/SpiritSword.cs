@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using AstekUtility;
+﻿using AstekUtility;
 using AstekUtility.DesignPattern.ServiceLocatorTool;
 using AstekUtility.Gameplay;
 using AstekUtility.Gameplay.Collision;
-using AstekUtility.Input;
-using AstekUtility.Odin.Utility;
 using Entity.Player;
-using Global.Pool;
+using Global;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Animations;
-using UnityEngine.Animations.Rigging;
 using UnityEngine.Splines;
-using UnityEngine.VFX;
 namespace Entity.Abilities
 {
 	public class SpiritSword : AbilityBase
@@ -82,7 +74,7 @@ namespace Entity.Abilities
 				return;
 
 			Debug.Log(collision.gameObject.name);
-			GameObject effect = Instantiate(hitEffect, ServiceLocator.ForSceneOf(this).Get<ParticleEffectsInGameObjectPool>()?.transform);
+			GameObject effect = Instantiate(hitEffect, ServiceLocator.ForSceneOf(this).Get<VFXHolder>()?.transform);
 			effect.transform.position = collision.GetContact(0).point;
 			effect.transform.rotation = Quaternion.LookRotation(collision.GetContact(0).normal);
 			effect.GetComponentsInChildren<ParticleSystem>().ForEach(particle => particle.Play());

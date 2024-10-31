@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using AstekUtility;
 using AstekUtility.DesignPattern.ServiceLocatorTool;
+using Combat.Player;
 using Entity.Abilities;
 using Entity.Player;
 using UnityEngine;
@@ -9,6 +11,7 @@ namespace Combat.UI
 {
 	public class AbilityHUDManager : MonoBehaviour
 	{
+		[SerializeField] private PlayerRuntimeSet playerRTSet;
 		[SerializeField] private AbilityTile[] abilityTiles;
 
 		public int GetTileOrder(AbilityTile tile)
@@ -23,43 +26,39 @@ namespace Combat.UI
 			return -1;
 		}
 
-		private void Awake()
+		private void OnEnable()
 		{
 			ServiceLocator.For(this).Register(this);
+			foreach (AbilityTile tile in abilityTiles)
+				new AbilityTile.Builder().SetActiveAbilityIndex(playerRTSet.Owner?.ActiveAbilityIndex() ?? 0).Build(tile);
 		}
 
-		private void OnDestroy()
+		private void OnDisable()
 		{
-			ServiceLocator.For(this)?.Deregister(this);
-			
-			PlayerMediator mediator = ServiceLocator.ForSceneOf(this)?.Get<PlayerMediator>();
-			if (!mediator)
+
+			if (!playerRTSet.Owner.OrNull())
 				return;
-			
+
 			foreach (AbilityTile tile in abilityTiles)
 			{
-				mediator.AbilityChangedSubject.Detach(tile);
-				mediator.AbilityStateChangedSubject.Detach(tile);
-				mediator.AbilityProgressChangedSubject.Detach(tile);
-				mediator.ActiveAbilitySwitchedSubject.Detach(tile);
+				playerRTSet.Owner?.AbilityChangedSubject.Detach(tile);
+				playerRTSet.Owner?.AbilityStateChangedSubject.Detach(tile);
+				playerRTSet.Owner?.AbilityProgressChangedSubject.Detach(tile);
+				playerRTSet.Owner?.ActiveAbilitySwitchedSubject.Detach(tile);
 			}
+			ServiceLocator.For(this)?.Deregister(this);
 		}
 
 		private IEnumerator Start()
 		{
-			yield return new WaitWhile(() =>
-			{
-				ServiceLocator forSceneOf = ServiceLocator.ForSceneOf(this);
-				return forSceneOf?.Get<PlayerMediator>() == null;
-			});
-			
-			PlayerMediator mediator = ServiceLocator.ForSceneOf(this).Get<PlayerMediator>();
+			yield return new WaitWhile(() => !playerRTSet.Owner);
+
 			foreach (AbilityTile tile in abilityTiles)
 			{
-				mediator.AbilityChangedSubject.Attach(tile);
-				mediator.AbilityStateChangedSubject.Attach(tile);
-				mediator.AbilityProgressChangedSubject.Attach(tile);
-				mediator.ActiveAbilitySwitchedSubject.Attach(tile);
+				playerRTSet.Owner.AbilityChangedSubject.Attach(tile);
+				playerRTSet.Owner.AbilityStateChangedSubject.Attach(tile);
+				playerRTSet.Owner.AbilityProgressChangedSubject.Attach(tile);
+				playerRTSet.Owner.ActiveAbilitySwitchedSubject.Attach(tile);
 			}
 		}
 	}

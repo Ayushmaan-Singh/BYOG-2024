@@ -214,26 +214,13 @@ namespace AstekUtility
 		/// </summary>
 		/// <param name="go"></param>
 		/// <param name="component"></param>
+		/// <param name="includeInactive"></param>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public static bool TryGetComponentFromParentOrChildren<T>(this GameObject go, out T component) where T : MonoBehaviour
+		public static bool TryGetComponentInParentOrChildren<T>(this GameObject go, out T component, bool includeInactive = true) where T : MonoBehaviour
 		{
-			component = null;
-			if (!go)
-				return false;
-
-			// Check if the current object has the component
-			component = go.GetComponentInParent<T>(true);
-			if (component)
-				return true;
-
-			// Check children
-			component = go.GetComponentInChildren<T>(true);
-			if (component)
-				return true;
-
-			// Component not found in hierarchy
-			return false;
+			component = go?.GetComponentInParent<T>(includeInactive) ?? go?.GetComponentInChildren<T>(includeInactive);
+			return component.OrNull();
 		}
 
 		/// <summary>
@@ -246,7 +233,7 @@ namespace AstekUtility
 		}
 
 		/// <summary>
-		///     Immediately destroys all children of the given GameObject.
+		/// Immediately destroys all children of the given GameObject.
 		/// </summary>
 		/// <param name="gameObject">GameObject whose children are to be destroyed.</param>
 		public static void DestroyChildrenImmediate(this GameObject gameObject)
@@ -439,7 +426,6 @@ namespace AstekUtility
 	/// <summary>
 	/// Extension method that converts an AsyncOperation into a Task.
 	/// </summary>
-	/// <param name="asyncOperation">The AsyncOperation to convert.</param>
 	/// <returns>A Task that represents the completion of the AsyncOperation.</returns>
 	public static class AsyncOperationExtensions
 	{
@@ -478,8 +464,98 @@ namespace AstekUtility
 		{
 			foreach (T item in sequence)
 			{
-				action(item);
+				action.Invoke(item);
 			}
+		}
+
+		public static IEnumerable<T> Where<T>(this IEnumerable<T> sequence, Func<T, bool> action)
+		{
+			foreach (T item in sequence)
+			{
+				if (action.Invoke(item))
+					yield return item;
+			}
+		}
+
+		public static int RemoveWhere<T>(this ICollection<T> collection, Func<T, bool> predicate)
+		{
+			List<T> itemsToRemove = collection.Where(predicate).ToList();
+			int removeCount = 0;
+			itemsToRemove.ForEach(item =>
+			{
+				if (collection.Remove(item)) removeCount++;
+			});
+			return removeCount;
+		}
+
+		public static IEnumerable<TResult> Select<TSource, TResult>(this IEnumerable<TSource> sequence, Func<TSource, TResult> selector)
+		{
+			foreach (TSource item in sequence)
+			{
+				yield return selector(item);
+			}
+		}
+
+		public static bool All<T>(this IEnumerable<T> sequence, Func<T, bool> predicate)
+		{
+			foreach (T item in sequence)
+			{
+				if (!predicate.Invoke(item)) return false;
+			}
+			return true;
+		}
+
+		public static bool Any<T>(this IEnumerable<T> sequence, Func<T, bool> predicate)
+		{
+			foreach (T item in sequence)
+			{
+				if (predicate.Invoke(item)) return true;
+			}
+			return false;
+		}
+
+		public static IEnumerable<T> Except<T>(this IEnumerable<T> first, IEnumerable<T> second)
+		{
+			HashSet<T> set = new HashSet<T>(second);
+			foreach (T item in first)
+			{
+				if (!set.Contains(item)) yield return item;
+			}
+		}
+
+		public static List<T> ToList<T>(this IEnumerable<T> sequence)
+		{
+			List<T> collection = new List<T>();
+			sequence.ForEach(item => collection.Add(item));
+			return collection;
+		}
+		public static T[] ToArray<T>(this IEnumerable<T> sequence)
+		{
+			if (sequence == null) throw new ArgumentNullException(nameof(sequence));
+			List<T> resultList = new List<T>();
+			foreach (T item in sequence)
+			{
+				resultList.Add(item);
+			}
+			T[] resultArray = new T[resultList.Count];
+			for (int i = 0; i < resultList.Count; i++)
+			{
+				resultArray[i] = resultList[i];
+			}
+			return resultArray;
+		}
+
+		public static T[] ToArray<T>(this ICollection<T> sequence)
+		{
+			T[] array = new T[sequence.Count];
+			int count = array.Length;
+			int i = 0;
+			sequence.ForEach(item =>
+			{
+				array[i] = item;
+				i++;
+			});
+			return array;
 		}
 	}
 
@@ -494,8 +570,8 @@ namespace AstekUtility
 		/// <returns></returns>
 		public static bool IsRotationApproximatelySame(this Quaternion q1, Quaternion q2, float tolerance = 0f)
 		{
-				float dot = Quaternion.Dot(q1, q2);
-				return Mathf.Abs(dot) > (1.0f - Mathf.Clamp(tolerance,0,1));
+			float dot = Quaternion.Dot(q1, q2);
+			return Mathf.Abs(dot) > (1.0f - Mathf.Clamp(tolerance, 0, 1));
 		}
 	}
 }

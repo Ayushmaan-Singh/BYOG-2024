@@ -1,53 +1,42 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using AstekUtility;
 using AstekUtility.DesignPattern.ServiceLocatorTool;
 using AstekUtility.Gameplay.Timer;
-using AstekUtility.Odin.Utility;
-using Combat.Enemy;
-using Global.Pool;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Entity.Abilities
 {
 	public class ProjectileAbility : AbilityBase
 	{
-		[SerializeField] private GameObject projectile;
 		[SerializeField] private Transform muzzle;
-		[SerializeField] private float cooldownTime;
-		[SerializeField] private UnityTag shooterTag;
+
+		[Space]
 		[SerializeField] private float damage;
+		[SerializeField] private float projectileSpeed;
+		[SerializeField] private float cooldownTime;
+
+		[Space]
+		[SerializeField] private LayerMask includeLayers;
+		[SerializeField] private LayerMask excludeLayers;
 
 		private CountdownTimer _cooldownTimer;
 
 		private void Awake()
 		{
-			_cooldownTimer = new CountdownTimer(cooldownTime);
-			_cooldownTimer.OnTimerStop += () =>
+			_cooldownTimer = new CountdownTimer(cooldownTime)
 			{
-				CurrentState = State.Usable;
+				OnTimerStop = () =>
+				{
+					CurrentState = State.Usable;
+				}
 			};
 		}
 
 		private void Update()
 		{
-			switch (CurrentState)
-			{
-				case State.Usable:
-					break;
+			_cooldownTimer.Tick(Time.deltaTime);
 
-				case State.Unusable:
-					
-					_cooldownTimer.Tick(Time.deltaTime);
-					break;
-
-				case State.InProgress:
-					break;
-
-				default:
-					throw new ArgumentOutOfRangeException();
-			}
+			if (_cooldownTimer.IsRunning)
+				Progress = _cooldownTimer.Progress;
 		}
 
 		public override void Execute()
@@ -55,11 +44,24 @@ namespace Entity.Abilities
 			if (CurrentState != State.Usable)
 				return;
 
-			GameObject ammo =
-				Instantiate(projectile, muzzle.position, Quaternion.LookRotation(muzzle.forward), ServiceLocator.ForSceneOf(this).Get<ParticleEffectsInGameObjectPool>().transform);
-			ammo.GetComponentInChildren<ProjectileAbility>().Execute();
-			CurrentState = State.Unusable;
-			_cooldownTimer.Start();
+			// ProjectileBase ammo =
+			// 	ServiceLocator.ForSceneOf(this).Get<ProjectileFactory>().Instantiate<ProjectileBase>();
+			//
+			// if (!ammo.OrNull())
+			// 	return;
+			//
+			// new ProjectileBase.Builder()
+			// 	.InitPosition(muzzle.position)
+			// 	.InitForwardDirection(muzzle.forward)
+			// 	.InitIncludeLayers(includeLayers)
+			// 	.InitExcludeLayers(excludeLayers)
+			// 	.InitDmgAmount(damage)
+			// 	.InitDmgScaleStat(ServiceLocator.For(this).Get<EntityStatSystem>().GetInstanceStats(Stats.DamageScale))
+			// 	.InitProjectileSpeed(projectileSpeed)
+			// 	.Build(ammo).Execute();
+			//
+			// CurrentState = State.Unusable;
+			// _cooldownTimer.Start();
 		}
 
 		public override void CancelExecution()

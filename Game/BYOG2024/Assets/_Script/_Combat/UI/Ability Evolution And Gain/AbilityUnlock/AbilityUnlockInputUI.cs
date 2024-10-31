@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using AstekUtility;
 using AstekUtility.DesignPattern.ServiceLocatorTool;
 using AstekUtility.Gameplay.Timer;
+using Combat.Player;
 using Entity.Player;
 using Global;
 using Global.UI;
@@ -16,6 +17,8 @@ namespace Combat.UI
 {
 	public class AbilityUnlockInputUI : MonoBehaviour
 	{
+		[SerializeField] private PlayerRuntimeSet playerRTSet; 
+		
 		[Header("Visual FX")]
 		[SerializeField] private UIFadeInFX rightFadeIn;
 		[SerializeField] private UIFadeOutFX rightFadeOut;
@@ -44,7 +47,7 @@ namespace Combat.UI
 		private CoroutineTask _onPress;
 		private CountdownTimer _holdTimer;
 
-		private void Awake()
+		private void Start()
 		{
 			_leftDefaultUIPosX = leftClick.GetComponent<RectTransform>().anchoredPosition.x;
 			_rightDefaultUIPosX = rightClick.GetComponent<RectTransform>().anchoredPosition.x;
@@ -54,7 +57,7 @@ namespace Combat.UI
 				{
 					if (!_holdTimer.IsFinished)
 						return;
-					ServiceLocator.ForSceneOf(this).Get<PlayerMediator>().ChangeAbility(_rightClickPressed ? 1 : 0, ServiceLocator.For(this).Get<AbilityUnlockableUI>().AbilitySelected);
+					playerRTSet.Owner.ChangeAbility(_rightClickPressed ? 1 : 0, ServiceLocator.For(this).Get<AbilityUnlockableUI>().AbilitySelected);
 					ServiceLocator.For(this).Get<AbilityUnlockableUI>().Deactivate();
 				}
 			};

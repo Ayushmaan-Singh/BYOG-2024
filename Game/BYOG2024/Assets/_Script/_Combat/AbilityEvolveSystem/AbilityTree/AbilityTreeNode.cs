@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using AstekUtility;
-using AstekUtility.DesignPattern.ServiceLocatorTool;
 using Entity.Abilities;
 using JetBrains.Annotations;
 using Sirenix.OdinInspector;
@@ -26,7 +24,7 @@ namespace Combat.AbilityEvolution
 		public List<AbilityTreeNode> NextAbilities => GetOutputPort("NextNode").GetConnections().Select(port => port.node as AbilityTreeNode).ToList();
 		public List<AbilityTreeNode> PrevAbilities => GetInputPort("PrevNode").GetConnections().Select(port => port.node as AbilityTreeNode).ToList();
 
-		public bool CanGainAbility([NotNull] Dictionary<ConsumableEntities, int> resourcesAvailable)
+		public bool CanGainAbility([NotNull] Dictionary<ConsumableEntityType, int> resourcesAvailable)
 		{
 			if (resourcesAvailable == null)
 				throw new ArgumentNullException(nameof(resourcesAvailable));
@@ -35,7 +33,7 @@ namespace Combat.AbilityEvolution
 				       resourcesAvailable.ContainsKey(requirement.Consumable) && resourcesAvailable[requirement.Consumable] >= requirement.Count);
 		}
 
-		public bool CanEvolveAbility([NotNull] Dictionary<ConsumableEntities, int> resourcesAvailable)
+		public bool CanEvolveAbility([NotNull] Dictionary<ConsumableEntityType, int> resourcesAvailable)
 		{
 			if (resourcesAvailable == null)
 				throw new ArgumentNullException(nameof(resourcesAvailable));
@@ -48,7 +46,7 @@ namespace Combat.AbilityEvolution
 		[System.Serializable]
 		public class AbilityRequirements
 		{
-			[field:SerializeField] public ConsumableEntities Consumable { get; private set; }
+			[field:SerializeField] public ConsumableEntityType Consumable { get; private set; }
 			[field:SerializeField] public int Count { get; private set; }
 		}
 	}

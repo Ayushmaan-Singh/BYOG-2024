@@ -30,7 +30,7 @@ namespace Entity.Player
 		//Observed Subjects
 
 		//Health Manager
-		public readonly UnmanagedSubject<(float max, float current)> healthSubject = new UnmanagedSubject<(float max, float current)>();
+		public readonly UnmanagedSubject<(float max, float current)> HealthSubject = new UnmanagedSubject<(float max, float current)>();
 
 		//Ability System
 		public readonly UnmanagedSubject<(int index, AbilityBase to)> AbilityChangedSubject = new UnmanagedSubject<(int index, AbilityBase to)>();
@@ -40,21 +40,29 @@ namespace Entity.Player
 
 		private void Awake()
 		{
-			ServiceLocator.ForSceneOf(this).Register(this);
 			playerRTSet.RegisterPlayer(this).SetOwner(this);
 		}
 
 		private void OnDestroy()
 		{
-			ServiceLocator.ForSceneOf(this)?.Deregister(this);
 			playerRTSet.DeregisterPlayer(this).SetOwner(null);
+		}
+
+		private void OnEnable()
+		{
+			ServiceLocator.For(this).Register(this);
+		}
+
+		private void OnDisable()
+		{
+			ServiceLocator.For(this)?.Deregister(this);
 		}
 
 		#region Health Manager
 
 		public float CurrentHp => healthManager.CurrentHP;
 		public float MaxHp => statSystem.GetInstanceStats(Stats.Hp);
-		
+
 		public void Damage(float amount)
 		{
 			healthManager.Damage(amount);
@@ -69,14 +77,20 @@ namespace Entity.Player
 
 		#region Ability System
 
-		public Consumable[] ConsumableAbilityOwned()
+		public AbilityBase GetAbilityAtIndex(int index) => index < abilitySystem.AbilityOwned.Length ? abilitySystem.AbilityOwned[index] : null;
+		public AbilityBase.State? GetAbilityStateAtIndex(int index) => index < abilitySystem.AbilityOwned.Length ? abilitySystem.AbilityOwned[index].CurrentState : null;
+		public float? AbilityProgressAtIndex(int index) => index < abilitySystem.AbilityOwned.Length ? abilitySystem.AbilityOwned[index].Progress : null;
+		public bool? IsAbilityAtIndexActiveAbility(int index) => index < abilitySystem.AbilityOwned.Length ? abilitySystem.GetActiveAbility == abilitySystem.AbilityOwned[index] : null;
+		public int ActiveAbilityIndex() => abilitySystem.ActiveAbilityIndex;
+
+		public ConsumableEntity[] ConsumableAbilityOwned()
 		{
 			AbilityBase[] abilities = abilitySystem.AbilityOwned;
-			abilities = abilities.Where(ability => ability.GetComponentInChildren<Consumable>() != null).ToArray();
-			Consumable[] consumableAbilities = new Consumable[abilities.Length];
+			abilities = abilities.Where(ability => ability.GetComponentInChildren<ConsumableEntity>() != null).ToArray();
+			ConsumableEntity[] consumableAbilities = new ConsumableEntity[abilities.Length];
 			int count = consumableAbilities.Length;
 			for (int i = 0; i < count; i++)
-				consumableAbilities[i] = abilities[i].GetComponentInChildren<Consumable>();
+				consumableAbilities[i] = abilities[i].GetComponentInChildren<ConsumableEntity>();
 			return consumableAbilities;
 		}
 

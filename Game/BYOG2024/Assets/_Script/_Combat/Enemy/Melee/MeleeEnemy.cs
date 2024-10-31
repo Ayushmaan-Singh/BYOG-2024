@@ -20,40 +20,30 @@ namespace Combat.Enemy
 		[SerializeField] private float meleeAttackRange;
 
 		[SerializeField] private PlayerRuntimeSet playerRTSet;
-		
-		public new void Awake()
-		{
-			ServiceLocator.For(this).Register(this);
-		}
 
 		private void Start()
 		{
 			InitializeStateMachine();
 		}
 
-		public new void OnDestroy()
-		{
-			ServiceLocator.For(this)?.Deregister(this);
-		}
-
 		protected override void InitializeStateMachine()
 		{
-			_stateMachine.AddTransition(meleeAttackState, chaseState, new Predicate(() =>  playerRTSet.Owner.OrNull() 
+			_masterStateMachine.AddTransition(meleeAttackState, chaseState, new Predicate(() =>  playerRTSet.Owner.OrNull() 
 			                                                                               && (playerRTSet.Owner.MainBodyRb.transform.position - transform.position).sqrMagnitude > meleeAttackRange));
-			_stateMachine.AddTransition(chaseState, meleeAttackState, new Predicate(() => playerRTSet.Owner.OrNull()
+			_masterStateMachine.AddTransition(chaseState, meleeAttackState, new Predicate(() => playerRTSet.Owner.OrNull()
 			                                                                              && (playerRTSet.Owner.MainBodyRb.transform.position - transform.position).sqrMagnitude <= meleeAttackRange));
 			
-			_stateMachine.ChangeState(chaseState);
+			_masterStateMachine.ChangeState(chaseState);
 		}
 
 		private void Update()
 		{
-			_stateMachine.FrameUpdate();
+			_masterStateMachine.FrameUpdate();
 		}
 
 		private void FixedUpdate()
 		{
-			_stateMachine.PhysicsUpdate();
+			_masterStateMachine.PhysicsUpdate();
 		}
 	}
 }

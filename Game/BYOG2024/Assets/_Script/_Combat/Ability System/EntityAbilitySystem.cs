@@ -15,18 +15,19 @@ namespace Entity
 
 		protected AbilityBase _activeAbility;
 		protected int _activeAbilityIndex = 0;
-		
+
 		public AbilityBase[] GetAbilities => abilities;
+		public int ActiveAbilityIndex => _activeAbilityIndex;
 		public AbilityBase GetActiveAbility => _activeAbility;
-		
+
 		public Vector3? AimAt { get; protected set; }
 
-		protected void Awake()
+		protected void OnEnable()
 		{
 			ServiceLocator.For(this).Register(this);
 		}
 
-		protected void OnDestroy()
+		protected void OnDisable()
 		{
 			ServiceLocator.For(this)?.Deregister(this);
 		}

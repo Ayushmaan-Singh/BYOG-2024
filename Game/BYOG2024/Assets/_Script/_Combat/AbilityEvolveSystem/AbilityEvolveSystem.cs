@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AstekUtility.DesignPattern.ServiceLocatorTool;
 using Combat.AbilityEvolution;
+using Combat.Player;
 using Combat.UI;
 using Entity;
 using Entity.Abilities;
@@ -17,6 +18,7 @@ namespace Combat
 {
 	public class AbilityEvolveSystem : SerializedMonoBehaviour
 	{
+		[SerializeField] private PlayerRuntimeSet playerRTSet;
 		[SerializeField] private AbilityTreeGraph abilityEvolutionTree;
 		[SerializeField] private PrefabCollection abilityPrefabCollection;
 		[SerializeField] private AbilityUnlockableUI unlockableUI;
@@ -25,10 +27,10 @@ namespace Combat
 		private readonly Dictionary<AbilityBase, AbilityTreeNode[]> _possibleEvolution;
 		private readonly Dictionary<AbilityBase, AbilityTreeNode[]> _unlockableAbility;
 
-		[OdinSerialize]private readonly Dictionary<ConsumableEntities, int> _consumedEntities = new Dictionary<ConsumableEntities, int>();
-		public int this[ConsumableEntities type] => _consumedEntities.GetValueOrDefault(type);
+		[OdinSerialize]private readonly Dictionary<ConsumableEntityType, int> _consumedEntities = new Dictionary<ConsumableEntityType, int>();
+		public int this[ConsumableEntityType type] => _consumedEntities.GetValueOrDefault(type);
 
-		private void Awake()
+		private void OnEnable()
 		{
 			ServiceLocator.ForSceneOf(this).Register(this);
 		}
@@ -39,20 +41,24 @@ namespace Combat
 		// 	TryGainAbility();
 		// }
 
-		private void OnDestroy()
+		private void OnDisable()
 		{
 			ServiceLocator.ForSceneOf(this)?.Deregister(this);
 		}
 
-		public void ConsumeEntity(Consumable entity)
+		public void ConsumeEntity(ConsumableEntity entity)
 		{
-			_consumedEntities.TryAdd(entity.EntityType, 0);
-			_consumedEntities[entity.EntityType]++;
+			ConsumableEntityType[] consumableEntitiesArray = entity.EntityTypes;
+			foreach (ConsumableEntityType consumableEntityType in consumableEntitiesArray)
+			{
+				if (!_consumedEntities.TryAdd(consumableEntityType, 1))
+					_consumedEntities[consumableEntityType] += 1;
+			}
 		}
 		
 		public void TryEvolving()
 		{
-			AbilityBase[] abilities = ServiceLocator.ForSceneOf(this).Get<PlayerMediator>().AbilityOwned;
+			AbilityBase[] abilities = playerRTSet.Owner.AbilityOwned;
 			Dictionary<AbilityBase, AbilityTreeNode[]> abilityEvolutions = new Dictionary<AbilityBase, AbilityTreeNode[]>();
 
 			int count = abilities.Length;
@@ -71,16 +77,18 @@ namespace Combat
 		}
 		public void TryGainAbility()
 		{
-			Consumable[] abilities = ServiceLocator.ForSceneOf(this).Get<PlayerMediator>().ConsumableAbilityOwned();
-			Dictionary<ConsumableEntities, int> resourcesAvailable = new Dictionary<ConsumableEntities, int>(_consumedEntities);
+			ConsumableEntity[] abilities = playerRTSet.Owner.ConsumableAbilityOwned();
+			Dictionary<ConsumableEntityType, int> resourcesAvailable = new Dictionary<ConsumableEntityType, int>(_consumedEntities);
 
 			int count = abilities.Length;
 			for (int i = 0; i < count; i++)
 			{
-				if (!resourcesAvailable.ContainsKey(abilities[i].EntityType))
-					resourcesAvailable.Add(abilities[i].EntityType, 1);
-				else
-					resourcesAvailable[abilities[i].EntityType] += 1;
+				ConsumableEntityType[] consumableEntitiesArray = abilities[i].EntityTypes;
+				foreach (ConsumableEntityType consumableEntityType in consumableEntitiesArray)
+				{
+					if (!resourcesAvailable.TryAdd(consumableEntityType, 1))
+						resourcesAvailable[consumableEntityType] += 1;
+				}
 			}
 			AbilityTreeNode[] gainableAbility = abilityEvolutionTree.FindGainableAbility(resourcesAvailable);
 

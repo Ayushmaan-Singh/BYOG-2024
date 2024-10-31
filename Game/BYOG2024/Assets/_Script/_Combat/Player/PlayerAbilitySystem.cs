@@ -13,32 +13,28 @@ namespace Entity.Player
 		[SerializeField] private Gluttony gluttonyAbility;
 		public AbilityBase[] AbilityOwned => abilities;
 
-		protected new void Awake()
+		private PlayerMediator _playerMediator;
+
+		protected void Awake()
 		{
-			base.Awake();
 			_activeAbility = abilities[_activeAbilityIndex];
 		}
 
 		private void Start()
 		{
-			ServiceLocator.ForSceneOf(this).Get<PlayerMediator>().ActiveAbilitySwitchedSubject.Notify(0);
+			_playerMediator = ServiceLocator.For(this).Get<PlayerMediator>();
+			_playerMediator.ActiveAbilitySwitchedSubject.Notify(0);
 		}
 
 		private void Update()
 		{
 			AimAt = ServiceLocator.Global.Get<InputUtils.MousePosition>()?.Invoke() ?? Vector3.zero;
-			PlayerMediator playerMediator = ServiceLocator.ForSceneOf(this).Get<PlayerMediator>();
 			int count = abilities.Length;
-			for (int i=0;i<count;i++)
+			for (int i = 0; i < count; i++)
 			{
-				playerMediator.AbilityStateChangedSubject.Notify((i,abilities[i].CurrentState));
-				playerMediator.AbilityProgressChangedSubject.Notify((i,abilities[i].Progress));
+				_playerMediator.AbilityStateChangedSubject.Notify((i, abilities[i].CurrentState));
+				_playerMediator.AbilityProgressChangedSubject.Notify((i, abilities[i].Progress));
 			}
-		}
-
-		protected new void OnDestroy()
-		{
-			base.OnDestroy();
 		}
 
 		public void Attack() => _activeAbility.Execute();
@@ -46,21 +42,21 @@ namespace Entity.Player
 
 		public void SwitchActiveAbility(float dir)
 		{
-			int calcIndex = (int)(_activeAbilityIndex + dir);
-			if (calcIndex >= abilities.Length)
-				_activeAbilityIndex = 0;
-			else if (calcIndex < 0)
-				_activeAbilityIndex = abilities.Length - 1;
-			else
-				_activeAbilityIndex = calcIndex;
-
-			_activeAbility = abilities[_activeAbilityIndex];
-			ServiceLocator.ForSceneOf(this).Get<PlayerMediator>().ActiveAbilitySwitchedSubject.Notify(_activeAbilityIndex);
+			_activeAbility = abilities[_activeAbilityIndex = Mathf.Abs((dir > 0 ? _activeAbilityIndex + 1 : _activeAbilityIndex - 1) % abilities.Length)];
+			ServiceLocator.For(this).Get<PlayerMediator>().ActiveAbilitySwitchedSubject.Notify(_activeAbilityIndex);
 		}
 
-		public void StartChannelingGluttony() => gluttonyAbility.Execute();
+		public void StartChannelingGluttony()
+		{
+			_activeAbility = gluttonyAbility;
+			gluttonyAbility.Execute();
+		}
 
-		public void StopChannelingGluttony() => gluttonyAbility.CancelExecution();
+		public void StopChannelingGluttony()
+		{
+			_activeAbility = abilities[_activeAbilityIndex];
+			gluttonyAbility.CancelExecution();
+		}
 
 		/// <summary>
 		/// Used by evolution
@@ -68,7 +64,7 @@ namespace Entity.Player
 		/// <param name="from"></param>
 		/// <param name="to"></param>
 		public bool TryChangeAbility(AbilityBase from, AbilityBase to) => TryChangeAbility(AbilityOfTypeAtIndex(from), to);
-		
+
 		/// <summary>
 		/// Used by ability unlock
 		/// </summary>

@@ -1,11 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using AstekUtility.DesignPattern.ServiceLocatorTool;
 using AstekUtility.Gameplay.Timer;
-using AstekUtility.Input;
-using Global.Pool;
-using Entity.Player;
 using UnityEngine;
 
 namespace Entity.Abilities
@@ -104,10 +99,8 @@ namespace Entity.Abilities
 				return;
 
 			CurrentState = State.Unusable;
-			Transform holder = ServiceLocator.ForSceneOf(this).Get<ParticleEffectsInGameObjectPool>().transform;
-			GameObject spawn = Instantiate(attackPrefab, ServiceLocator.For(this).Get<EntityAbilitySystem>().AimAt??Vector3.zero, Quaternion.identity, holder);
-			spawn.GetComponentInChildren<ParticleEffectManager>().SetAbility(this, damagePerHit);
-			spawn.GetComponentInChildren<ParticleEffectManager>().ParticleEffectOn();
+			// Transform holder = ServiceLocator.ForSceneOf(this).Get<ParticleEffectsInGameObjectPool>().transform;
+			// GameObject spawn = Instantiate(attackPrefab, ServiceLocator.For(this).Get<EntityAbilitySystem>().AimAt??Vector3.zero, Quaternion.identity, holder);
 			_cooldownTimer.Start();
 		}
 		public override void CancelExecution()

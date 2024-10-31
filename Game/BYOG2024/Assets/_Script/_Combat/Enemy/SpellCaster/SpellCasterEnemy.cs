@@ -13,30 +13,20 @@ namespace Combat.Enemy.SpellCaster
 
 		[SerializeField] private Transform playerHolder;
 		private Transform _playerTransform;
-		
-		public new void Awake()
-		{
-			ServiceLocator.For(this).Register(this);
-		}
 
 		private void Start()
 		{
 			InitializeStateMachine();
 		}
 
-		public new void OnDestroy()
-		{
-			ServiceLocator.For(this)?.Deregister(this);
-		}
-
 		protected override void InitializeStateMachine()
 		{
-			_stateMachine.AddTransition(spellCastAttackState, chaseState, new Predicate(() =>  _playerTransform 
+			_masterStateMachine.AddTransition(spellCastAttackState, chaseState, new Predicate(() =>  _playerTransform 
 			                                                                               && (_playerTransform.position - transform.position).sqrMagnitude > meleeAttackRange));
-			_stateMachine.AddTransition(chaseState, spellCastAttackState, new Predicate(() => _playerTransform 
+			_masterStateMachine.AddTransition(chaseState, spellCastAttackState, new Predicate(() => _playerTransform 
 			                                                                              && (_playerTransform.position - transform.position).sqrMagnitude <= meleeAttackRange));
 			
-			_stateMachine.ChangeState(chaseState);
+			_masterStateMachine.ChangeState(chaseState);
 		}
 
 		private void Update()
@@ -44,14 +34,14 @@ namespace Combat.Enemy.SpellCaster
 			_playerTransform ??= playerHolder.GetChild(0).GetComponentInChildren<PlayerController>().transform;
 			if (!_playerTransform)
 				return;
-			_stateMachine.FrameUpdate();
+			_masterStateMachine.FrameUpdate();
 		}
 
 		private void FixedUpdate()
 		{
 			if (!_playerTransform)
 				return;
-			_stateMachine.PhysicsUpdate();
+			_masterStateMachine.PhysicsUpdate();
 		}
 	}
 }

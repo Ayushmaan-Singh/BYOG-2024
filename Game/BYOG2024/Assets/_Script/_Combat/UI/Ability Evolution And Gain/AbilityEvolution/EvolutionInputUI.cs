@@ -2,6 +2,7 @@
 using AstekUtility.DesignPattern.ServiceLocatorTool;
 using AstekUtility.Gameplay.Timer;
 using AstekUtility.Input;
+using Combat.Player;
 using Entity.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,6 +12,8 @@ namespace Combat.UI
 {
 	public class EvolutionInputUI : MonoBehaviour
 	{
+		[SerializeField] private PlayerRuntimeSet playerRTSet;
+		
 		[Header("UI")]
 		[SerializeField] private Image progressImage;
 
@@ -21,7 +24,7 @@ namespace Combat.UI
 		private bool _isLeftClickPressed;
 		private CountdownTimer _holdTimer;
 
-		private void Awake()
+		private void Start()
 		{
 			_holdTimer = new CountdownTimer(holdTime)
 			{
@@ -29,7 +32,7 @@ namespace Combat.UI
 				{
 					if (!_holdTimer.IsFinished)
 						return;
-					ServiceLocator.ForSceneOf(this).Get<PlayerMediator>().ChangeAbility(ServiceLocator.For(this).Get<EvolutionUI>().SelectedAbilityBaseForm,
+					playerRTSet.Owner.ChangeAbility(ServiceLocator.For(this).Get<EvolutionUI>().SelectedAbilityBaseForm,
 						ServiceLocator.For(this).Get<EvolutionUI>().SelectedAbilityEvolvedForm);
 					ServiceLocator.For(this).Get<EvolutionUI>().Deactivate();
 				}

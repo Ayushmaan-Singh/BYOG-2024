@@ -13,7 +13,7 @@ namespace Entity
 		[OdinSerialize, InlineProperty] private Dictionary<Stats, float> defaultValue = new Dictionary<Stats, float>();
 		private Dictionary<Stats, float> _instanceValue = new Dictionary<Stats, float>();
 
-		private void Awake()
+		private void OnEnable()
 		{
 			ServiceLocator.For(this).Register(this);
 			foreach (Stats stat in defaultValue.Keys)
@@ -22,7 +22,7 @@ namespace Entity
 			}
 		}
 
-		private void OnDestroy()
+		private void OnDisable()
 		{
 			ServiceLocator.For(this)?.Deregister(this);
 		}

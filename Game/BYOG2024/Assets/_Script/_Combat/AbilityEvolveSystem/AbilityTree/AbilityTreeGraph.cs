@@ -16,7 +16,7 @@ namespace Combat.AbilityEvolution
 		[SerializeField] private AbilityTreeNode[] gainableAbilities;
 
 
-		public AbilityTreeNode[] FindGainableAbility(Dictionary<ConsumableEntities, int> resourcesAvailable) => gainableAbilities.Where(abilityNode => abilityNode.CanGainAbility(resourcesAvailable)).ToArray();
+		public AbilityTreeNode[] FindGainableAbility(Dictionary<ConsumableEntityType, int> resourcesAvailable) => gainableAbilities.Where(abilityNode => abilityNode.CanGainAbility(resourcesAvailable)).ToArray();
 
 		/// <summary>
 		/// Returns a list of possible evolutions for current ability
@@ -24,7 +24,7 @@ namespace Combat.AbilityEvolution
 		/// <param name="resourcesAvailable"></param>
 		/// <param name="ability"></param>
 		/// <returns></returns>
-		public AbilityTreeNode[] FindEvolutionsOfThisAbility(Dictionary<ConsumableEntities, int> resourcesAvailable, AbilityBase ability)
+		public AbilityTreeNode[] FindEvolutionsOfThisAbility(Dictionary<ConsumableEntityType, int> resourcesAvailable, AbilityBase ability)
 		{
 			return GetNodeInGraph(ability.GetType())?.NextAbilities?.Where(abilityNode => abilityNode.CanEvolveAbility(resourcesAvailable)).ToArray();
 		}
@@ -35,7 +35,7 @@ namespace Combat.AbilityEvolution
 		/// <param name="resourcesAvailable"></param>
 		/// <param name="ability"></param>
 		/// <returns></returns>
-		public AbilityTreeNode[] FindEvolutionsOfThisAbility(Dictionary<ConsumableEntities, int> resourcesAvailable, AbilityTreeNode ability)
+		public AbilityTreeNode[] FindEvolutionsOfThisAbility(Dictionary<ConsumableEntityType, int> resourcesAvailable, AbilityTreeNode ability)
 		{
 			List<AbilityTreeNode> nextAbilities = ability.NextAbilities;
 			return nextAbilities.Where(abilityNode => abilityNode.CanEvolveAbility(resourcesAvailable)).ToArray();

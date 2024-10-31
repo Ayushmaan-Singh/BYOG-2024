@@ -2,7 +2,7 @@
 
 namespace Combat
 {
-	public enum ConsumableEntities
+	public enum ConsumableEntityType
 	{
 		NonElementalLvl1,
 		FireLvl1,

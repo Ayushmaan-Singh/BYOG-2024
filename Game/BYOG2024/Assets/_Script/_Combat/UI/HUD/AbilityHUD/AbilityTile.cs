@@ -3,6 +3,7 @@ using System.Collections;
 using AstekUtility;
 using AstekUtility.DesignPattern.ServiceLocatorTool;
 using AstekUtility.Observer.Unmanaged;
+using Combat.Player;
 using Entity.Abilities;
 using Entity.Player;
 using Unity.VisualScripting;
@@ -27,23 +28,15 @@ namespace Combat.UI
 		[SerializeField] private Vector2 initialSize;
 		[SerializeField] private Vector2 finalSize;
 
-		private RectTransform rectTransform;
-		
+		private RectTransform _rectTransform;
+
 		private AbilityBase.State _currentState;
 		private bool _isActiveAbility = false;
 
 		private void Awake()
 		{
-			rectTransform = GetComponent<RectTransform>();
-		}
-
-		private void Start()
-		{
-			if (ServiceLocator.For(this).Get<AbilityHUDManager>().GetTileOrder(this) == 0)
-			{
-				_isActiveAbility = true;
-				rectTransform.localScale = finalSize;
-			}
+			_rectTransform = GetComponent<RectTransform>();
+			enabled = false;
 		}
 
 		private void OnDisable()
@@ -88,20 +81,47 @@ namespace Combat.UI
 			if (tileOrder != subject.Data && _isActiveAbility)
 			{
 				_isActiveAbility = false;
-				rectTransform.localScale = initialSize;
+				_rectTransform.localScale = initialSize;
 			}
 
 			if (tileOrder == subject.Data && !_isActiveAbility)
 			{
 				_isActiveAbility = true;
-				rectTransform.localScale = finalSize;
+				_rectTransform.localScale = finalSize;
 			}
+		}
+
+		private void ScaleUIObject(Vector3 size)
+		{
+			(_rectTransform ?? GetComponent<RectTransform>()).localScale = size;
 		}
 
 		//Reset class on disable
 		private void Reset()
 		{
-			rectTransform.sizeDelta = initialSize;
+			_rectTransform.sizeDelta = initialSize;
+		}
+
+		public class Builder
+		{
+			private int _activeAbilityIndex;
+
+			public Builder SetActiveAbilityIndex(int index)
+			{
+				_activeAbilityIndex = index;
+				return this;
+			}
+
+			public AbilityTile Build(AbilityTile instance)
+			{
+				if (ServiceLocator.For(instance).Get<AbilityHUDManager>().GetTileOrder(instance) == _activeAbilityIndex)
+				{
+					instance._isActiveAbility = true;
+					instance.ScaleUIObject(instance.finalSize);
+				}
+				instance.enabled = true;
+				return instance;
+			}
 		}
 	}
 }

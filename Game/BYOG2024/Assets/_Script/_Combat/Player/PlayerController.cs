@@ -22,18 +22,10 @@ namespace Entity.Player
 		
 		private ServiceLocator _serviceLocator;
 
-		private void Awake()
-		{
-			_serviceLocator = ServiceLocator.For(this).Register(this);
-		}
-
-		private void OnDestroy()
-		{
-			ServiceLocator.For(this)?.Deregister(this);
-		}
-
 		private void OnEnable()
-		{
+		{			
+			_serviceLocator = ServiceLocator.For(this).Register(this);
+
 			movementInput.action.performed += MovementPerformed;
 			movementInput.action.canceled += MovementCancelled;
 			attackInput.action.performed += Attack;
@@ -52,6 +44,8 @@ namespace Entity.Player
 			changeActiveAttackInput.action.performed -= CurrentAbilityChanged;
 			changeActiveAttackInput.action.performed -= GluttonyPerformed;
 			gluttonyAbility.action.canceled -= GluttonyCancelled;
+			
+			ServiceLocator.For(this)?.Deregister(this);
 		}
 
 
@@ -87,12 +81,17 @@ namespace Entity.Player
 		public void Damage(float amount)
 		{
 			ServiceLocator.For(this).Get<EntityHealthManager>()?.Damage(amount);
-			ServiceLocator.ForSceneOf(this).Get<PlayerMediator>().healthSubject.Notify((MaxHp,CurrentHp));
+			ServiceLocator.For(this).Get<PlayerMediator>().HealthSubject.Notify((MaxHp,CurrentHp));
 		}
 		public void Heal(float amount)
 		{
 			ServiceLocator.For(this).Get<EntityHealthManager>()?.Heal(amount);
-			ServiceLocator.ForSceneOf(this).Get<PlayerMediator>().healthSubject.Notify((MaxHp,CurrentHp));
+			ServiceLocator.For(this).Get<PlayerMediator>().HealthSubject.Notify((MaxHp,CurrentHp));
+		}
+
+		public void OnDeath()
+		{
+			
 		}
 
 		#endregion

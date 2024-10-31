@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 namespace AstekUtility.DesignPattern.ServiceLocatorTool
 {
@@ -15,7 +16,6 @@ namespace AstekUtility.DesignPattern.ServiceLocatorTool
 		private static ServiceLocator _GLOBAL;
 		private static Dictionary<Scene, ServiceLocator> _SCENECONTAINERS;
 		private static List<GameObject> _TMPSCENEGAMEOBJECTS;
-		private static List<object> _CACHESERVICESOFDESTROYEDSERVICELOCATOR;
 
 		private static bool _APPLICATIONQUIT = false;
 
@@ -123,14 +123,8 @@ namespace AstekUtility.DesignPattern.ServiceLocatorTool
 		/// <param name="service">The service to register.</param>  
 		/// <typeparam name="T">Class type of the service to be registered.</typeparam>
 		/// <returns>The ServiceLocator instance after registering the service.</returns>
-		public ServiceLocator Register<T>(T service) where T:class
+		public ServiceLocator Register<T>(T service) where T : class
 		{
-			T cachedService = GetObjectFromCache<T>();
-			if (cachedService != null)
-			{
-				_CACHESERVICESOFDESTROYEDSERVICELOCATOR.Remove(cachedService);
-			}
-			
 			_services.Register(service);
 			return this;
 		}
@@ -158,29 +152,14 @@ namespace AstekUtility.DesignPattern.ServiceLocatorTool
 			if (_APPLICATIONQUIT == true)
 				return this;
 
-			T cachedService = GetObjectFromCache<T>();
-
-			if (cachedService != null)
-			{
-				_CACHESERVICESOFDESTROYEDSERVICELOCATOR.Remove(cachedService);
-				return this;
-			}
-
+			//Deregister here
 			if (TryDeregister(service))
 				return this;
-
-			ServiceLocator container = null;
-			TryGetNextInHierarchy(out container);
-			while (container != null)
-			{
-				if (container.TryDeregister(service))
-				{
-					return this;
-				}
-				TryGetNextInHierarchy(out container);
-			}
-
-			Debug.LogError($"ServiceLocator.Deregister:No service of type {typeof(T).Name} is registered");
+			
+			//Deregister in next hierarchichal service locator
+			TryGetNextInHierarchy(out ServiceLocator container);
+			container.TryDeregister(service);
+			
 			return this;
 		}
 
@@ -197,14 +176,6 @@ namespace AstekUtility.DesignPattern.ServiceLocatorTool
 		/// <returns>The ServiceLocator instance after attempting to retrieve the service.</returns>
 		public ServiceLocator Get<T>(out T service) where T : class
 		{
-			T cachedService = GetObjectFromCache<T>();
-
-			if (cachedService != null)
-			{
-				Register(cachedService);
-				_CACHESERVICESOFDESTROYEDSERVICELOCATOR.Remove(cachedService);
-			}
-
 			if (TryGetService(out service)) return this;
 
 			if (TryGetNextInHierarchy(out ServiceLocator container))
@@ -223,14 +194,6 @@ namespace AstekUtility.DesignPattern.ServiceLocatorTool
 		/// <returns>Instance of the service of type T.</returns>
 		public T Get<T>() where T : class
 		{
-			T cachedService = GetObjectFromCache<T>();
-
-			if (cachedService != null)
-			{
-				Register(cachedService);
-				_CACHESERVICESOFDESTROYEDSERVICELOCATOR.Remove(cachedService);
-			}
-
 			Type type = typeof(T);
 
 			if (TryGetService(type, out T service)) return service;
@@ -266,26 +229,9 @@ namespace AstekUtility.DesignPattern.ServiceLocatorTool
 			//Servicelocator is local level so return next higher in heirarchy i.e superceeding servicelocator, sceneservicelocator or globalservicelocator
 			else
 			{
-				container = transform.parent.OrNull()?.GetComponentInParent<ServiceLocator>().OrNull() ?? ForSceneOf(this);
+				container = transform.parent?.GetComponentInParent<ServiceLocator>().OrNull() ?? ForSceneOf(this) ?? Global;
 			}
 			return container;
-		}
-
-		/// <summary>
-		/// Checks and return if there is object of type T in cache. At the same time cleans any null in the list
-		/// </summary>
-		/// <returns></returns>
-		private T GetObjectFromCache<T>() where T : class
-		{
-			_CACHESERVICESOFDESTROYEDSERVICELOCATOR = _CACHESERVICESOFDESTROYEDSERVICELOCATOR.Where(x => x != null).ToList();
-			foreach (object cachedService in _CACHESERVICESOFDESTROYEDSERVICELOCATOR)
-			{
-				if (cachedService.GetType() == typeof(T) || typeof(T).IsAssignableFrom(cachedService.GetType()))
-				{
-					return cachedService as T;
-				}
-			}
-			return null;
 		}
 
 		private void OnApplicationQuit()
@@ -295,9 +241,6 @@ namespace AstekUtility.DesignPattern.ServiceLocatorTool
 
 		private void OnDestroy()
 		{
-			if (_services.RegisteredServices.Count() > 0)
-				_CACHESERVICESOFDESTROYEDSERVICELOCATOR.AddRange(_services.RegisteredServices);
-
 			if (this == _GLOBAL)
 			{
 				_GLOBAL = null;
@@ -315,7 +258,6 @@ namespace AstekUtility.DesignPattern.ServiceLocatorTool
 			_GLOBAL = null;
 			_SCENECONTAINERS = new Dictionary<Scene, ServiceLocator>();
 			_TMPSCENEGAMEOBJECTS = new List<GameObject>();
-			_CACHESERVICESOFDESTROYEDSERVICELOCATOR = new List<object>();
 			_APPLICATIONQUIT = false;
 		}
 

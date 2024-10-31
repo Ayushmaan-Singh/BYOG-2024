@@ -7,5 +7,6 @@ namespace AstekUtility.Gameplay
 
 		void Damage(float amount);
 		void Heal(float amount);
+		void OnDeath();
 	}
 }

@@ -1,117 +1,50 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+
+#nullable enable
 namespace AstekUtility
 {
-	public class ObjectPool
+	[Serializable]
+	public class ObjectPool<T>
 	{
-		private readonly Type _type;
-		private readonly List<object?> _objectQueue;
+		private readonly List<T> _collection = new List<T>();
+		[SerializeField, Min(1)] private int maxSize;
+		[SerializeField] private bool canExpand = true;
 
-		private readonly bool _isInfinite = false;
-		public int Count => _objectQueue.Count;
+		public bool CanBePooled => _collection.Count < maxSize || canExpand;
+		public bool CanRelease => _collection.Count > 0;
 
-		public ObjectPool(uint maxPoolSize, Type type)
+		public event Action<T> OnPooled = delegate { };
+		public event Action<T> OnRelease = delegate { };
+		public event Action<T> OnClear = delegate { };
+
+		public ObjectPool() { }
+		public ObjectPool(int maxSize) => this.maxSize = maxSize;
+		public ObjectPool(bool canExpand) => this.canExpand = canExpand;
+
+		public void PoolObject(T obj)
 		{
-			_type = type;
-			_objectQueue = new List<object?>((int)maxPoolSize);
-			_isInfinite = false;
+			if (!CanBePooled)
+				return;
+
+			_collection.Add(obj);
+			OnPooled.Invoke(obj);
 		}
-
-		public ObjectPool(Type type)
+		public T? ReleaseObject()
 		{
-			_type = type;
-			_objectQueue = new List<object?>();
-			_isInfinite = true;
+			if (!CanRelease)
+				return default(T);
+
+			T obj = _collection[0];
+			_collection.Remove(obj);
+			OnRelease.Invoke(obj);
+			return obj;
 		}
-
-		public bool Contains(object? obj) => _objectQueue.Contains(obj);
-
-		public bool CanAddItemToPool(object? obj)
+		public void Clear()
 		{
-			return obj?.GetType() == _type && (_isInfinite || _objectQueue.Count < _objectQueue.Capacity) && !_objectQueue.Contains(obj);
-		}
-
-		public void AddItemToPool(object? obj)
-		{
-			if (CanAddItemToPool(obj))
-			{
-				_objectQueue.Add(obj);
-			}
-			else
-			{
-				if (obj?.GetType() != _type)
-					Debug.Log($"ObjectPool: Type {obj?.GetType().Name} does not match collection's type {_type.Name}");
-
-				else
-					Debug.Log("ObjectPool : Amount Exceeded Cannot Add More Item");
-			}
-		}
-
-
-		public T? GetItemFromPool<T>() where T : class?
-		{
-			if (typeof(T) != _type && !typeof(T).IsAssignableFrom(_type))
-			{
-				Debug.Log($"ObjectPool: Type {typeof(T).Name} does not match collection's type {_type.Name}");
-				return null;
-			}
-
-			if (_objectQueue.Count > 0)
-			{
-				object? val = _objectQueue[0];
-				_objectQueue.RemoveAt(0);
-				return val as T;
-			}
-			return null;
-		}
-
-		public object? GetItemFromPool(Type type)
-		{
-			if (type != _type && !type.IsAssignableFrom(_type))
-			{
-				Debug.Log($"ObjectPool: Type {type.Name} does not match collection's type {_type.Name}");
-				return null;
-			}
-
-			if (_objectQueue.Count > 0)
-			{
-				object? val = _objectQueue[0];
-				_objectQueue.RemoveAt(0);
-				return val;
-			}
-			return null;
-		}
-
-		public bool TryGetItemFromPool<T>(out T? val) where T : class?
-		{
-			val = null;
-			if (!typeof(T).Equals(_type))
-			{
-				Debug.Log($"ObjectPool: Type {typeof(T).Name} does not match collection's type {_type.Name}");
-				return false;
-			}
-
-			if (_objectQueue.Count > 0)
-			{
-				object? value = _objectQueue[0];
-				_objectQueue.RemoveAt(0);
-				val = value as T;
-				return true;
-			}
-			return false;
-		}
-
-		public object? GetSpecificObjectFromPool(object objectToGet)
-		{
-			if (_objectQueue.Contains(objectToGet))
-			{
-				object? obj = _objectQueue.Find(x => x == objectToGet);
-				_objectQueue.Remove(objectToGet);
-				return obj;
-			}
-			return null;
+			_collection.ForEach(obj => OnClear.Invoke(obj));
+			_collection.Clear();
 		}
 	}
 }

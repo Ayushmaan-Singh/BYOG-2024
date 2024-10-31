@@ -1,37 +1,44 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
+using AstekUtility;
 using AstekUtility.DesignPattern.ServiceLocatorTool;
 using AstekUtility.DesignPattern.StateMachine;
 using AstekUtility.Gameplay;
 using Entity;
-using Sirenix.OdinInspector;
+using Entity.Abilities;
+using Global;
 using UnityEngine;
 
 namespace Combat.Enemy
 {
-	public class EnemyController : MonoBehaviour, IDamageable
+	public abstract class EnemyController : MonoBehaviour, IDamageable
 	{
-		[SerializeField] private Rigidbody rb;
+		[SerializeField] protected Rigidbody rb;
+		[SerializeField] protected Renderer[] renderers;
 
 		[Header("Sub Components")]
-		[SerializeField] private EntityHealthManager healthManager;
-		[SerializeField] private EntityStatSystem statSystem;
+		[SerializeField] protected EntityHealthManager healthManager;
+		[SerializeField] protected EntityStatSystem statSystem;
+		[SerializeField] protected EntityAbilitySystem abilitySystem;
+		[SerializeField] protected EntityAnimationController animationController;
 
-		protected StateMachine _stateMachine = new StateMachine();
+		[Header("Gluttony")]
+		[SerializeField] protected GluttonyConsumeSequence consumeSequencePrefab;
+		[SerializeField] protected Transform gluttonyFXPositionTransform;
+		[SerializeField] protected float gluttonyFXMaxSize;
 
-		protected void Awake()
+		protected StateMachine _masterStateMachine = new StateMachine();
+
+		protected void OnEnable()
 		{
 			ServiceLocator.For(this).Register(this);
 		}
 
-		protected void OnDestroy()
+		protected void OnDisable()
 		{
 			ServiceLocator.For(this)?.Deregister(this);
 		}
 
-		protected virtual void InitializeStateMachine()
-		{
-			//noap
-		}
+		protected abstract void InitializeStateMachine();
 
 		#region Health Manager
 
@@ -47,7 +54,37 @@ namespace Combat.Enemy
 			healthManager.Heal(amount);
 		}
 
+		public void OnDeath()
+		{
+			Destroy(ServiceLocator.For(this).gameObject);
+		}
+
 		#endregion
 
+		public void OnConsume(ConsumableEntity consumableEntity)
+		{
+			//Do things like stopping all the scripts and processing
+			statSystem.enabled = false;
+			healthManager.enabled = false;
+			animationController.enabled = false;
+			abilitySystem.enabled = false;
+			this.enabled = false;
+		}
+
+		public async void OnConsume_Gluttony(ConsumableEntity consumableEntity)
+		{
+			renderers?.ForEach(meshRenderer => meshRenderer.enabled = false);
+			GluttonyConsumeSequence sequence = new GluttonyConsumeSequence.Builder()
+				.SetPosition(gluttonyFXPositionTransform.position)
+				.SetMaxSize(gluttonyFXMaxSize)
+				.Build(Instantiate(consumeSequencePrefab, ServiceLocator.ForSceneOf(this)?.Get<VFXHolder>()?.transform, true)).Execute();
+
+			while (!sequence.EntityReadyToBeDestroyed)
+				await Task.Delay(Random.Range(16, 33));
+
+			//This is the last thing to happen
+			ServiceLocator.ForSceneOf(this)?.Get<AbilityEvolveSystem>()?.ConsumeEntity(consumableEntity);
+			Destroy(ServiceLocator.For(this).gameObject);
+		}
 	}
 }
