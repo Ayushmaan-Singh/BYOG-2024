@@ -63,7 +63,6 @@ namespace Entity.Abilities
 			if (!_collisionLayerFilter.CanCollide(collision.gameObject))
 				return;
 
-			Debug.Log("Hammer DMG");
 			IDamageable damageable = collision.gameObject.GetComponentInParent<IDamageable>();
 			damageable.Damage(_hammerDropDamage);
 		}
