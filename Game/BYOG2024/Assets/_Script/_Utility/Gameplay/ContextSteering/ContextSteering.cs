@@ -1,82 +1,103 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using AstekUtility.CardinalDirection;
+using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 namespace AstekUtility.Gameplay
 {
-	[Serializable]
-	public abstract class ContextSteering
+	public class ContextSteering : MonoBehaviour
 	{
-		[field:SerializeField] public ContextSolver ContextSolver { get; private set; }
-		public AIData AIData { get; protected set; }
-		protected List<Detector> _detectors = new List<Detector>();
+		[Header("Context Steering Data")]
+		[SerializeField] protected ContextSolver contextSolver;
+		[SerializeField] protected Detector[] detectors;
+		[SerializeField] protected SteeringBehaviour[] steeringBehaviours;
 
-		protected Vector3[] _direction8SidesXZ;
-		protected Transform _mainModel;
-		protected List<SteeringBehaviour> _steeringBehaviours = new List<SteeringBehaviour>();
+		[Space]
+		[SerializeField, MaxValue(360)] protected int dirMapResolution = 16;
 
-		public ContextSteering(List<SteeringBehaviour> steeringBehaviours, List<Detector> detectors, Transform mainModel)
+		[Header("Main Model Data")]
+		[SerializeField] protected Transform mainModel;
+		[SerializeField] protected Collider[] colliders;
+
+		protected AIData _aiData;
+		protected Vector3[] directionXZ;
+		public Vector3 Direction { get; private set; } = Vector3.zero;
+
+		private void Awake()
 		{
-			_steeringBehaviours = steeringBehaviours;
-			_detectors = detectors;
-			_mainModel = mainModel;
+			Init();
+		}
 
-			AIData = new AIData();
-			_direction8SidesXZ = new Vector3[8];
-			IEnumerable<Direction8Sides> directions = Enum.GetValues(typeof(Direction8Sides)).Cast<Direction8Sides>();
+		protected virtual void Init()
+		{
+			_aiData = new AIData();
+			InitDirections();
+			contextSolver = new ContextSolver(directionXZ, mainModel);
 
-			int i = 0;
-			foreach (Direction8Sides dir in directions)
+			foreach (SteeringBehaviour behavior in steeringBehaviours)
 			{
-				Vector2Int dirXZ = DirectionHelper8Sides.GetVectorinDirection(dir);
-				_direction8SidesXZ[i] = new Vector3(dirXZ.x, 0, dirXZ.y);
-				i++;
+				new SteeringBehaviour.Builder()
+					.InitAIData(_aiData)
+					.InitMainModel(mainModel)
+					.InitDirectionXZ(directionXZ)
+					.Build(behavior);
 			}
-
-			ContextSolver = new ContextSolver(_direction8SidesXZ, _mainModel);
-
-			foreach (SteeringBehaviour behavior in _steeringBehaviours)
+			foreach (Detector detector in this.detectors)
 			{
-				object[] parameters =
-				{
-					_mainModel, _direction8SidesXZ, AIData
-				};
-				behavior.GetType().InvokeMethodByName(behavior, "Init", parameters);
-			}
-			foreach (Detector detector in _detectors)
-			{
-				object[] parameters =
-				{
-					_mainModel, AIData
-				};
-				detector.GetType().InvokeMethodByName(detector, "Init", parameters);
+				new Detector.Builder()
+					.InitAIData(_aiData)
+					.InitMainModel(mainModel)
+					.Build(detector);
 			}
 		}
 
-		public Vector3 UpdateDirection()
+		protected void InitDirections()
 		{
-			foreach (Detector detector in _detectors)
+			directionXZ = new Vector3[dirMapResolution];
+			float directionInterval = Mathf.PI * 2 / dirMapResolution;
+			for (int i = 0; i < dirMapResolution; i++)
+			{
+				float currentAngle = i * directionInterval;
+				directionXZ[i] = new Vector3(Mathf.Cos(currentAngle), 0, Mathf.Sin(currentAngle));
+			}
+		}
+
+		private void FixedUpdate()
+		{
+			Direction = UpdateDirection();
+		}
+
+		private Vector3 UpdateDirection()
+		{
+			foreach (Detector detector in detectors)
 			{
 				detector.Detect();
 			}
 
-			if (AIData.CurrentTarget)
+			if (_aiData.CurrentTarget)
 			{
-				if (!AIData.CurrentTarget)
+				if (!_aiData.CurrentTarget)
 				{
 					//Stopping Logic
 					return Vector3.zero;
 				}
-				return ContextSolver.GetDirectionToMove(_steeringBehaviours);
+				return contextSolver.GetDirectionToMove(steeringBehaviours);
 			}
-			if (AIData.GetTargetsCount() > 0)
+			if (_aiData.GetTargetsCount() > 0)
 			{
 				//Target acquisition logic
-				AIData.CurrentTarget = AIData.Targets[0];
+				_aiData.CurrentTarget = _aiData.Targets[0];
 			}
 
 			return Vector3.zero;
+		}
+
+		private void OnDrawGizmos()
+		{
+			contextSolver.OnDrawGizmos();
 		}
 	}
 }

@@ -13,7 +13,7 @@ namespace Combat.Enemy
 		public override void Detect()
 		{
 			//Cleans the list in case player is destroyed
-			_aiData.Targets = _aiData.Targets.Where(target => target.OrNull()).ToList();
+			_aiData.Targets.RemoveWhere(target => target.OrNull());
 			
 			if (_aiData.Targets.Count > 0)
 				return;

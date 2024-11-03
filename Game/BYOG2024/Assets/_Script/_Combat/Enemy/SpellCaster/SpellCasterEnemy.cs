@@ -1,5 +1,6 @@
 ﻿using AstekUtility.DesignPattern.ServiceLocatorTool;
 using AstekUtility.DesignPattern.StateMachine;
+using Combat.Player;
 using Entity.Player;
 using UnityEngine;
 namespace Combat.Enemy.SpellCaster
@@ -8,10 +9,9 @@ namespace Combat.Enemy.SpellCaster
 	{
 		[SerializeField] private ChaseState chaseState;
 		[SerializeField] private SpellCastingAttackState spellCastAttackState;
+		[SerializeField] private PlayerRuntimeSet playerRTSet;
 
 		[SerializeField] private float meleeAttackRange;
-
-		[SerializeField] private Transform playerHolder;
 		private Transform _playerTransform;
 
 		private void Start()
@@ -21,17 +21,17 @@ namespace Combat.Enemy.SpellCaster
 
 		protected override void InitializeStateMachine()
 		{
-			_masterStateMachine.AddTransition(spellCastAttackState, chaseState, new Predicate(() =>  _playerTransform 
-			                                                                               && (_playerTransform.position - transform.position).sqrMagnitude > meleeAttackRange));
-			_masterStateMachine.AddTransition(chaseState, spellCastAttackState, new Predicate(() => _playerTransform 
-			                                                                              && (_playerTransform.position - transform.position).sqrMagnitude <= meleeAttackRange));
-			
+			_masterStateMachine.AddTransition(spellCastAttackState, chaseState, new Predicate(() => _playerTransform
+			                                                                                        && (_playerTransform.position - transform.position).sqrMagnitude > meleeAttackRange && !spellCastAttackState.IsAttacking));
+			_masterStateMachine.AddTransition(chaseState, spellCastAttackState, new Predicate(() => _playerTransform
+			                                                                                        && (_playerTransform.position - transform.position).sqrMagnitude <= meleeAttackRange));
+
 			_masterStateMachine.ChangeState(chaseState);
 		}
 
 		private void Update()
 		{
-			_playerTransform ??= playerHolder.GetChild(0).GetComponentInChildren<PlayerController>().transform;
+			_playerTransform ??= playerRTSet.Owner.GetComponentInChildren<PlayerMediator>().MainMovementBody;
 			if (!_playerTransform)
 				return;
 			_masterStateMachine.FrameUpdate();

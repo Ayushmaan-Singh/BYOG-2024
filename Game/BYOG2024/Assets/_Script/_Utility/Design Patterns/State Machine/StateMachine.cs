@@ -24,9 +24,9 @@ namespace AstekUtility.DesignPattern.StateMachine
 
 		public void ChangeState(IState state)
 		{
-			if (state == CurrentState.State) return;
+			if (state == CurrentState?.State) return;
 
-			IState previousState = CurrentState.State;
+			IState previousState = CurrentState?.State;
 			IState nextState = _nodes[state.GetType()].State;
 
 			previousState?.OnStateExit();
@@ -70,10 +70,10 @@ namespace AstekUtility.DesignPattern.StateMachine
 			return node;
 		}
 
-        /// <summary>
-        /// Node containing a state and its transitions
-        /// </summary>
-        public class StateNode
+		/// <summary>
+		/// Node containing a state and its transitions
+		/// </summary>
+		public class StateNode
 		{
 			public StateNode(IState state)
 			{

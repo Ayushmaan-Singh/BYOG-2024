@@ -462,6 +462,9 @@ namespace AstekUtility
 	{
 		public static void ForEach<T>(this IEnumerable<T> sequence, Action<T> action)
 		{
+			if (sequence == null)
+				throw new ArgumentNullException(nameof(sequence));
+
 			foreach (T item in sequence)
 			{
 				action.Invoke(item);
@@ -470,6 +473,9 @@ namespace AstekUtility
 
 		public static IEnumerable<T> Where<T>(this IEnumerable<T> sequence, Func<T, bool> action)
 		{
+			if (sequence == null)
+				throw new ArgumentNullException(nameof(sequence));
+
 			foreach (T item in sequence)
 			{
 				if (action.Invoke(item))
@@ -479,6 +485,9 @@ namespace AstekUtility
 
 		public static int RemoveWhere<T>(this ICollection<T> collection, Func<T, bool> predicate)
 		{
+			if (collection == null)
+				throw new ArgumentNullException(nameof(collection));
+
 			List<T> itemsToRemove = collection.Where(predicate).ToList();
 			int removeCount = 0;
 			itemsToRemove.ForEach(item =>
@@ -490,6 +499,9 @@ namespace AstekUtility
 
 		public static IEnumerable<TResult> Select<TSource, TResult>(this IEnumerable<TSource> sequence, Func<TSource, TResult> selector)
 		{
+			if (sequence == null)
+				throw new ArgumentNullException(nameof(sequence));
+
 			foreach (TSource item in sequence)
 			{
 				yield return selector(item);
@@ -498,6 +510,9 @@ namespace AstekUtility
 
 		public static bool All<T>(this IEnumerable<T> sequence, Func<T, bool> predicate)
 		{
+			if (sequence == null)
+				throw new ArgumentNullException(nameof(sequence));
+
 			foreach (T item in sequence)
 			{
 				if (!predicate.Invoke(item)) return false;
@@ -507,6 +522,9 @@ namespace AstekUtility
 
 		public static bool Any<T>(this IEnumerable<T> sequence, Func<T, bool> predicate)
 		{
+			if (sequence == null)
+				throw new ArgumentNullException(nameof(sequence));
+
 			foreach (T item in sequence)
 			{
 				if (predicate.Invoke(item)) return true;
@@ -516,6 +534,9 @@ namespace AstekUtility
 
 		public static IEnumerable<T> Except<T>(this IEnumerable<T> first, IEnumerable<T> second)
 		{
+			if (first == null || second == null)
+				throw new ArgumentNullException(first == null ? nameof(first) : nameof(second));
+
 			HashSet<T> set = new HashSet<T>(second);
 			foreach (T item in first)
 			{
@@ -525,13 +546,18 @@ namespace AstekUtility
 
 		public static List<T> ToList<T>(this IEnumerable<T> sequence)
 		{
+			if (sequence == null) 
+				throw new ArgumentNullException(nameof(sequence));
+
 			List<T> collection = new List<T>();
 			sequence.ForEach(item => collection.Add(item));
 			return collection;
 		}
 		public static T[] ToArray<T>(this IEnumerable<T> sequence)
 		{
-			if (sequence == null) throw new ArgumentNullException(nameof(sequence));
+			if (sequence == null)
+				throw new ArgumentNullException(nameof(sequence));
+
 			List<T> resultList = new List<T>();
 			foreach (T item in sequence)
 			{
@@ -547,6 +573,9 @@ namespace AstekUtility
 
 		public static T[] ToArray<T>(this ICollection<T> sequence)
 		{
+			if (sequence == null) 
+				throw new ArgumentNullException(nameof(sequence));
+			
 			T[] array = new T[sequence.Count];
 			int count = array.Length;
 			int i = 0;

@@ -5026,6 +5026,7 @@ MonoBehaviour:
   <AbilityTileImage>k__BackingField: {fileID: 0}
   <AbilityDescription>k__BackingField: 
   blackHole: {fileID: 8286235708839146409}
+  blackHoleRadius: 4
   blackHoleModel: {fileID: 8494347510672715905}
   maxSize: {x: 100, y: 100, z: 100}
   duration: 10

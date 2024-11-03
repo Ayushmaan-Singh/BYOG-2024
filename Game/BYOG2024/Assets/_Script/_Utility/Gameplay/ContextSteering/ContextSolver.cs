@@ -6,19 +6,19 @@ namespace AstekUtility.Gameplay
 	[Serializable]
 	public class ContextSolver
 	{
-		private Vector3[] _direction8SidesXZ;
+		private Vector3[] _direction;
 		protected Transform _mainModel;
 
-		public ContextSolver(Vector3[] direction8SidesXZ, Transform mainModel)
+		public ContextSolver(Vector3[] direction, Transform mainModel)
 		{
-			_direction8SidesXZ = direction8SidesXZ;
+			_direction = direction;
 			_mainModel = mainModel;
 		}
 
-		public Vector3 GetDirectionToMove(List<SteeringBehaviour> behaviours)
+		public Vector3 GetDirectionToMove(SteeringBehaviour[] behaviours)
 		{
-			float[] danger = new float[8];
-			float[] interest = new float[8];
+			float[] danger = new float[_direction.Length];
+			float[] interest = new float[_direction.Length];
 
 			//Loop through each behaviour
 			foreach (SteeringBehaviour behaviour in behaviours)
@@ -27,22 +27,23 @@ namespace AstekUtility.Gameplay
 			}
 
 			//subtract danger _values from interest array
-			for (int i = 0; i < 8; i++)
+			int directionCount = _direction.Length;
+			for (int i = 0; i < directionCount; i++)
 			{
 				interest[i] = Mathf.Clamp01(interest[i] - danger[i]);
 			}
 
 #if UNITY_EDITOR
-	
+
 			_interestGizmo = interest;
 
 #endif
 
-			//get the average direction
+			//get the average _direction
 			Vector3 outputDirection = Vector3.zero;
-			for (int i = 0; i < 8; i++)
+			for (int i = 0; i < directionCount; i++)
 			{
-				outputDirection += _direction8SidesXZ[i] * interest[i];
+				outputDirection += _direction[i] * interest[i];
 			}
 
 			outputDirection.Normalize();
@@ -52,7 +53,7 @@ namespace AstekUtility.Gameplay
 			_resultDirection = outputDirection;
 
 #endif
-			//return the selected movement direction
+			//return the selected movement _direction
 			return outputDirection;
 		}
 # if UNITY_EDITOR
@@ -67,7 +68,7 @@ namespace AstekUtility.Gameplay
 		//gizmo parameters
 		[SerializeField] private Color _gizmoColor = Color.yellow;
 		[SerializeField] private bool _showGizmos = true;
-		private float[] _interestGizmo = new float[8];
+		private float[] _interestGizmo;
 		private Vector3 _resultDirection = Vector3.zero;
 		[SerializeField] private float _rayLength = 2;
 #endif

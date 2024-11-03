@@ -42,7 +42,10 @@ namespace Entity
 			{
 				_currentHP = Mathf.Clamp(_currentHP - amount, 0, ServiceLocator.For(this).Get<EntityStatSystem>().GetInstanceStats(Stats.Hp));
 				if (amount > 0)
+				{
 					meshFlashFX?.Play();
+					HitPause.Instance.ExecuteHitPause(0.1f);
+				}
 
 				if (!IsAlive)
 				{

@@ -4,7 +4,7 @@ namespace AstekUtility.Gameplay
 {
 	public class SeekBehaviour : SteeringBehaviour
 	{
-		[SerializeField] private float _targetRechedThreshold = 0.5f;
+		[SerializeField] private float _targetReachedThreshold = 0.5f;
 		private bool _reachedLastTarget = true;
 
 		public void OnDrawGizmos()
@@ -21,7 +21,7 @@ namespace AstekUtility.Gameplay
 					Gizmos.color = Color.green;
 					for (int i = 0; i < _interestsTemp.Length; i++)
 					{
-						Gizmos.DrawRay(_mainModel.position, _direction8SidesXZ[i] * _interestsTemp[i] * 2);
+						Gizmos.DrawRay(_mainModel.position, _directionXZ[i] * _interestsTemp[i] * 2);
 					}
 					if (_reachedLastTarget == false)
 					{
@@ -54,7 +54,7 @@ namespace AstekUtility.Gameplay
 				_targetPositionCached = _aiData.CurrentTarget.transform.position;
 
 			//First check if we have reached the target
-			if (Mathf.Sqrt((_mainModel.position - _targetPositionCached).sqrMagnitude) < _targetRechedThreshold)
+			if (Mathf.Sqrt((_mainModel.position - _targetPositionCached).sqrMagnitude) < _targetReachedThreshold)
 			{
 				_reachedLastTarget = true;
 				_aiData.CurrentTarget = null;
@@ -65,7 +65,7 @@ namespace AstekUtility.Gameplay
 			Vector3 directionToTarget = _targetPositionCached - _mainModel.position;
 			for (int i = 0; i < interest.Length; i++)
 			{
-				float result = Vector3.Dot(directionToTarget.normalized, _direction8SidesXZ[i]);
+				float result = Vector3.Dot(directionToTarget.normalized, _directionXZ[i]);
 
 				//accept only directions at the less than 90 degrees to the target direction
 				if (result > 0)

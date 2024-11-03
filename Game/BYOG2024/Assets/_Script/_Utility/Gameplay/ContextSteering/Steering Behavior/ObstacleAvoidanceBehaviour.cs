@@ -22,7 +22,7 @@ namespace AstekUtility.Gameplay
 				return;
 
 			//Gizmos.color = Color.red;
-			//Gizmos.DrawSphere(_mainModel.position, _agentColliderSize);
+			//Gizmos.DrawSphere(mainModel.position, _agentColliderSize);
 
 			if (Application.isPlaying && _dangersResultTemp != null)
 			{
@@ -34,7 +34,7 @@ namespace AstekUtility.Gameplay
 					{
 						Gizmos.DrawRay(
 							_mainModel.position,
-							_direction8SidesXZ[i] * _dangersResultTemp[i] * 2
+							_directionXZ[i] * _dangersResultTemp[i] * 2
 						);
 					}
 				}
@@ -61,11 +61,11 @@ namespace AstekUtility.Gameplay
 
 				Vector3 directionToObstacleNormalized = directionToObstacle.normalized;
 
-				int size = _direction8SidesXZ.Length;
+				int size = _directionXZ.Length;
 				//Add obstacle parameters to the danger array
 				for (int i = 0; i < size; i++)
 				{
-					float result = Vector3.Dot(directionToObstacleNormalized, _direction8SidesXZ[i]);
+					float result = Vector3.Dot(directionToObstacleNormalized, _directionXZ[i]);
 
 					float valueToPutIn = result * weight;
 

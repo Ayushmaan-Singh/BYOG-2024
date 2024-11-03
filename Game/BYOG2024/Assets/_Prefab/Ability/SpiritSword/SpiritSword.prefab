@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4605623329434017708}
   - component: {fileID: 7577907067029320139}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AttackPath1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5708809859602275927}
   - component: {fileID: 1388902854911102549}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AttackPath2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 2057514808148559454}
   - component: {fileID: 2187998454716369862}
   - component: {fileID: 2186889433619117128}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Flashes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5175,7 +5175,7 @@ GameObject:
   - component: {fileID: 2057100250927090484}
   - component: {fileID: 2188024577971557726}
   - component: {fileID: 2186778149245432354}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10075,7 +10075,7 @@ GameObject:
   - component: {fileID: 2059064885576160734}
   - component: {fileID: 2187974711619490386}
   - component: {fileID: 2186505971397440198}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Slash2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14984,7 +14984,7 @@ GameObject:
   - component: {fileID: 2057092802250504438}
   - component: {fileID: 2188299514865227110}
   - component: {fileID: 2187285838125250094}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Distortion(Delete for Mobile)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19884,7 +19884,7 @@ GameObject:
   - component: {fileID: 2059017544925693424}
   - component: {fileID: 2187795437552492324}
   - component: {fileID: 2188472002995183904}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24784,7 +24784,7 @@ GameObject:
   - component: {fileID: 2057278877491703428}
   - component: {fileID: 2187640473573804584}
   - component: {fileID: 2188711668548823208}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SlashSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29693,7 +29693,7 @@ GameObject:
   - component: {fileID: 2059258903926010572}
   - component: {fileID: 2188397551023176040}
   - component: {fileID: 2187178344228592510}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sword Slash 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34608,7 +34608,7 @@ GameObject:
   - component: {fileID: 2657520933166984303}
   - component: {fileID: 2750612913262094283}
   - component: {fileID: 2749719395716089309}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sword Slash 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39523,7 +39523,7 @@ GameObject:
   - component: {fileID: 2657552216794274643}
   - component: {fileID: 2751136965700977031}
   - component: {fileID: 2751030407459684227}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44423,7 +44423,7 @@ GameObject:
   - component: {fileID: 2665691279195271207}
   - component: {fileID: 2751298389380863115}
   - component: {fileID: 2750927033690109451}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SlashSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49332,7 +49332,7 @@ GameObject:
   - component: {fileID: 2665953908409096445}
   - component: {fileID: 2751639062124025189}
   - component: {fileID: 2750565221858339563}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Flashes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54232,7 +54232,7 @@ GameObject:
   - component: {fileID: 2665813376732735061}
   - component: {fileID: 2750849406419291077}
   - component: {fileID: 2749536379048716429}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Distortion(Delete for Mobile)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59132,7 +59132,7 @@ GameObject:
   - component: {fileID: 2657643573393722237}
   - component: {fileID: 2751597448691109105}
   - component: {fileID: 2750181761835002981}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Slash2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64041,7 +64041,7 @@ GameObject:
   - component: {fileID: 2665803196397819287}
   - component: {fileID: 2751682775367371773}
   - component: {fileID: 2750119380252159105}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68939,7 +68939,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4998811237801930092}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DamageArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68975,7 +68975,7 @@ GameObject:
   - component: {fileID: 5885645680218022382}
   - component: {fileID: 4018268968395237976}
   - component: {fileID: 7511813337129624790}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Berserker Spirit Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69057,7 +69057,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7832382714153644282}
   - component: {fileID: 8202415947018251266}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: A2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69089,7 +69089,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1088
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -69113,7 +69113,8 @@ GameObject:
   - component: {fileID: 330854214664772076}
   - component: {fileID: 1430201245436718717}
   - component: {fileID: 3774905456672422765}
-  m_Layer: 0
+  - component: {fileID: 5682543236512321417}
+  m_Layer: 9
   m_Name: SpiritSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69266,7 +69267,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 291080fdd9f7431fb369e02aca1bee02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EntityType>k__BackingField: 4
+  entityTypes: 
+  onConsume:
+    m_PersistentCalls:
+      m_Calls: []
+  onConsumeGluttony:
+    m_PersistentCalls:
+      m_Calls: []
+  onConsumeBeelzebub:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5682543236512321417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7873608035918064152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e3621b32d50844faa37723f5a385a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  includeLayer:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!1 &7904547539889578409
 GameObject:
   m_ObjectHideFlags: 0
@@ -69277,7 +69302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5209996012620853969}
   - component: {fileID: 8429754594255303995}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: A3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69309,7 +69334,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1088
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -69330,7 +69355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6003222306523625435}
   - component: {fileID: 7754019251148002927}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: A1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69362,7 +69387,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1088
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -69385,6 +69410,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sword Main
+      objectReference: {fileID: 0}
+    - target: {fileID: 168281752449153298, guid: b853bcd39857697499855a85b440ea18,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 168281752449153298, guid: b853bcd39857697499855a85b440ea18,
         type: 3}

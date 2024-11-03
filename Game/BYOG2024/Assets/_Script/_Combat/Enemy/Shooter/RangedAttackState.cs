@@ -19,10 +19,7 @@ namespace Combat.Enemy.Shooter
 		[SerializeField] private float rotationSpeed;
 
 		[Header("Player Detection And Navigation")]
-		[SerializeField, InlineProperty] private List<Detector> detectors = new List<Detector>();
-		[SerializeField, InlineProperty] private List<SteeringBehaviour> steeringBehaviours = new List<SteeringBehaviour>();
-
-		private ChaseBehavior _playerDirection;
+		[SerializeField, InlineProperty] private ContextSteering contextSteering;
 		private Rigidbody _rb;
 		private AbilityBase _abilityBeingUsed;
 		private bool _isInPositionToShoot = false;
@@ -31,9 +28,6 @@ namespace Combat.Enemy.Shooter
 		{
 			if (!_rb)
 				_rb = mainBody.GetComponent<Rigidbody>();
-
-			_playerDirection ??= new ChaseBehavior(steeringBehaviours, detectors, mainBody);
-
 		}
 		public override void FrameUpdate()
 		{
@@ -51,7 +45,7 @@ namespace Combat.Enemy.Shooter
 		}
 		public override void PhysicsUpdate()
 		{
-			Vector3 dir = _playerDirection.UpdateDirection();
+			Vector3 dir = contextSteering.Direction;
 			Quaternion targetRotation = Quaternion.LookRotation(dir);
 			if (!_abilityBeingUsed || _abilityBeingUsed.CurrentState != AbilityBase.State.InProgress)
 				_rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, Time.deltaTime * rotationSpeed));

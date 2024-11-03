@@ -23,6 +23,7 @@ namespace Entity.Abilities
 		[SerializeField] private SplineAnimate animate;
 
 		private Rigidbody _rb;
+		private CollisionLayerFilter _collisionLayerFilter;
 		private HandleMultiColliderSingleEntityCollision handleCollisionProcessing = new HandleMultiColliderSingleEntityCollision();
 
 		private int _index = 0;
@@ -30,6 +31,7 @@ namespace Entity.Abilities
 		private void Awake()
 		{
 			sword.SetActive(false);
+			_collisionLayerFilter = GetComponent<CollisionLayerFilter>();
 			damageColliders.ForEach(damageCollider => damageCollider.enabled = false);
 			_rb = GetComponentInChildren<Rigidbody>();
 		}
@@ -69,11 +71,13 @@ namespace Entity.Abilities
 
 		private void OnCollisionEnter(Collision collision)
 		{
+			if (!_collisionLayerFilter.CanCollide(collision.gameObject))
+				return;
+
 			handleCollisionProcessing.ProcessCollisionEnter(collision, out bool isAlreadyInCollision);
 			if (isAlreadyInCollision || ServiceLocator.For(this).transform == collision.gameObject.GetComponentInParent<ServiceLocator>().transform)
 				return;
 
-			Debug.Log(collision.gameObject.name);
 			GameObject effect = Instantiate(hitEffect, ServiceLocator.ForSceneOf(this).Get<VFXHolder>()?.transform);
 			effect.transform.position = collision.GetContact(0).point;
 			effect.transform.rotation = Quaternion.LookRotation(collision.GetContact(0).normal);

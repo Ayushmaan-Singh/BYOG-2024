@@ -7,11 +7,9 @@ namespace AstekUtility.Gameplay
 		public Dictionary<Detector, Collider[]> AvoidedObjectCollection = new Dictionary<Detector, Collider[]>();
 
 		public Collider CurrentTarget;
-		public List<Collider> Targets;
+		public readonly List<Collider> Targets = new List<Collider>();
 
-		public AIData()
-		{
-		}
+		public AIData() { }
 
 		public int GetTargetsCount()
 		{

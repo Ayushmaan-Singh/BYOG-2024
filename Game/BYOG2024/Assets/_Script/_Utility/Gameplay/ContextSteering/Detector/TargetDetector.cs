@@ -17,7 +17,7 @@ namespace AstekUtility.Gameplay
 			Gizmos.color = _gizmoColor;
 			if (_aiData.Targets == null)
 				return;
-			
+
 			foreach (Collider item in _aiData.Targets)
 			{
 				Gizmos.DrawSphere(item.transform.position, 0.4f);
@@ -30,7 +30,9 @@ namespace AstekUtility.Gameplay
 			if (!_mainModel)
 				return;
 
-			_aiData.Targets = Physics.OverlapSphere(_mainModel.position, detectionRadius, detectObjectInLayer).ToList();
+			_aiData.Targets.Clear();
+			_aiData.Targets.AddRange(Physics.OverlapSphere(_mainModel.position, detectionRadius, detectObjectInLayer).ToList());
+			;
 		}
 	}
 }

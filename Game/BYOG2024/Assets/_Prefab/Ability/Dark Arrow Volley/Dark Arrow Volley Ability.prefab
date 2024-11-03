@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3333557841304287499}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3940363549161958225}
   - component: {fileID: 4783103458271405359}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Dark Arrow Volley Ability
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 6655028150254510838}
   - component: {fileID: 5159237649115018916}
   - component: {fileID: 2074093213791095604}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Indicator_Emissive_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

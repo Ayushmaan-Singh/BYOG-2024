@@ -10,11 +10,6 @@ namespace AstekUtility.Gameplay
 		protected AIData _aiData;
 		protected Transform _mainModel;
 
-		public void Init(Transform mainModel, AIData aIData)
-		{
-			_mainModel = mainModel;
-			_aiData = aIData;
-		}
 		public abstract void Detect();
 
 		#if UNITY_EDITOR
@@ -22,5 +17,32 @@ namespace AstekUtility.Gameplay
 		[SerializeField] protected Color _gizmoColor = Color.magenta;
 		public abstract void OnDrawGizmos();
 		#endif
+
+		public class Builder
+		{
+			private AIData _aiData;
+			private Transform _mainModel;
+
+			public Builder InitAIData(AIData aiData)
+			{
+				_aiData = aiData;
+				return this;
+			}
+			
+			public Builder InitMainModel(Transform model)
+			{
+				_mainModel = model;
+				return this;
+			}
+			
+			public Detector Build(Detector instance)
+			{
+				instance._aiData = _aiData;
+				instance._mainModel = _mainModel;
+
+				instance.enabled = true;
+				return instance;
+			}
+		}
 	}
 }

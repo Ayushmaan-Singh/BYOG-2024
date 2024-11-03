@@ -19,10 +19,7 @@ namespace Combat.Enemy
 		[SerializeField] private float rotationSpeed;
 
 		[Header("Player Detection And Navigation")]
-		[SerializeField, InlineProperty] private List<Detector> detectors = new List<Detector>();
-		[SerializeField, InlineProperty] private List<SteeringBehaviour> steeringBehaviours = new List<SteeringBehaviour>();
-
-		private ChaseBehavior _playerDirection;
+		[SerializeField, InlineProperty] private ContextSteering contextSteering;
 		private AbilityBase meleeAbility;
 		private Rigidbody _rb;
 
@@ -30,9 +27,6 @@ namespace Combat.Enemy
 		{
 			if (!_rb)
 				_rb = mainBody.GetComponent<Rigidbody>();
-
-			_playerDirection ??= new ChaseBehavior(steeringBehaviours, detectors, mainBody);
-
 		}
 		public override void FrameUpdate()
 		{
@@ -43,9 +37,10 @@ namespace Combat.Enemy
 			ability.Execute();
 			meleeAbility = abilitySystem.GetAbilities[0];
 		}
+		
 		public override void PhysicsUpdate()
 		{
-			Vector3 dir = _playerDirection.UpdateDirection();
+			Vector3 dir = contextSteering.Direction;
 
 			if (meleeAbility.CurrentState != AbilityBase.State.InProgress)
 				_rb.MoveRotation(Quaternion.Slerp(_rb.rotation, Quaternion.LookRotation(dir), Time.deltaTime * rotationSpeed));
